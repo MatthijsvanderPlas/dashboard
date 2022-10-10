@@ -13,10 +13,12 @@
     "format": "npm run prettier:fix && npm run lint:fix"
   },
   "dependencies": {
+    "papaparse": "^5.3.2",
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
   },
   "devDependencies": {
+    "@types/papaparse": "^5.3.5",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.5",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
