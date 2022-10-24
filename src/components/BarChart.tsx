@@ -15,10 +15,12 @@ export function BarChart({
   labels,
   csvdifficulty,
   csvfun,
+  title,
 }: {
-  labels: string[];
+  labels: (string | string[])[];
   csvdifficulty: number[];
   csvfun: number[];
+  title: string;
 }) {
   const options = {
     responsive: true,
@@ -28,7 +30,26 @@ export function BarChart({
       },
       title: {
         display: true,
-        text: 'Student Data',
+        text: title,
+        font: {
+          size: 30,
+        },
+      },
+    },
+    scales: {
+      y: {
+        min: 0,
+        max: 5,
+        stepSize: 0.5,
+      },
+      x: {
+        ticks: {
+          minRotation: 0,
+          maxRotation: 0,
+          font: {
+            size: 10,
+          },
+        },
       },
     },
   };
@@ -49,5 +70,5 @@ export function BarChart({
     ],
   };
 
-  return <Bar options={options} data={data} />;
+  return <Bar options={options} data={data} height={550} />;
 }
