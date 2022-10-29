@@ -1,4 +1,4 @@
-import { CsvData } from 'store/studentDataSlice';
+import { CsvData } from '~/App';
 
 const sheetId = '1BHjq5MjpuSItvVbnQcEdQt_v956-Ks1lr3f_nEFkTks';
 const base = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?`;
