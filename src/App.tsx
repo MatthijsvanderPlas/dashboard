@@ -10,14 +10,10 @@ export interface CsvData {
   fun: number;
 }
 
-type studentContext = {
-  data: CsvData[];
-};
-
 const App = () => {
-  const studentContext = createContext<studentContext>(useLoaderData());
+  const studentContext: any = createContext(useLoaderData());
   const students: string[] = Array.from(
-    new Set(studentContext._currentValue.map((item) => item.name)),
+    new Set(studentContext._currentValue.map((item: CsvData) => item.name)),
   );
 
   return (

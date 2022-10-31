@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import StudentModal from './StudentModal';
-import winc from '~/assets/winc.svg';
+import winc from '../assets/winc.svg';
 
 const NavBar = ({ students }: { students: string[] }) => {
   const [isOpen, setIsOpen] = useState(false);

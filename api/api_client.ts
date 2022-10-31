@@ -11,7 +11,7 @@ const fetchData = async () => {
   const rep = await response.text();
   const jsonData = JSON.parse(rep.substring(47).slice(0, -2));
   const data: CsvData[] = [];
-  jsonData.table.rows.forEach((item) => {
+  jsonData.table.rows.forEach((item: any) => {
     data.push({
       name: item.c[0].v,
       assignment: item.c[1].v,

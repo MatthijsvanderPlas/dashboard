@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-function Sitemap({ link }: { link: string }) {
+interface Props {
+  link: string;
+}
+
+function Sitemap({ link }: Props) {
   const { student } = useParams();
 
   const [sitemap, setSitemap] = useState<string>('');
@@ -10,7 +14,7 @@ function Sitemap({ link }: { link: string }) {
   useEffect(() => {
     setSitemap(link);
     if (student) setCurrentStudent(student);
-  }, [link]);
+  }, [link, student]);
 
   return (
     <div className='text-slate-300 font-sans text-sm m-2'>
