@@ -1,14 +1,14 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App';
 import fetchData from 'api/api_client';
-import Test from './components/Test';
+import Hero from './pages/Hero';
+import Student from './pages/Student';
+import Spreadsheet from './pages/Spreadsheet';
+import About from './pages/About';
 
 const loader = () => {
-  console.log('fetching data');
   return fetchData();
 };
 
@@ -19,8 +19,20 @@ const router = createBrowserRouter([
     loader: loader,
     children: [
       {
-        path: '/',
-        element: <Test />,
+        path: '',
+        element: <Hero />,
+      },
+      {
+        path: '/:student',
+        element: <Student />,
+      },
+      {
+        path: '/spreadsheet',
+        element: <Spreadsheet />,
+      },
+      {
+        path: '/about',
+        element: <About />,
       },
     ],
   },
