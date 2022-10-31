@@ -3,6 +3,7 @@ import { CsvData } from '~/App';
 import useStore from '~/useStore';
 import { BarChart } from '../components/BarChart';
 import SliceButton from '../components/SliceButton';
+import Sitemap from './Sitemap';
 
 export default function Hero() {
   const data: CsvData[] = useOutletContext();
@@ -21,6 +22,9 @@ export default function Hero() {
   } = useStore(data);
   return (
     <>
+      <div>
+        <Sitemap />
+      </div>
       <div className='flex justify-center mx-auto max-w-5xl max-h-full '>
         <BarChart
           labels={labels}

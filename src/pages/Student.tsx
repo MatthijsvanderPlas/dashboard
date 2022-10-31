@@ -3,6 +3,7 @@ import { CsvData } from '~/App';
 import useStore from '~/useStore';
 import { BarChart } from '../components/BarChart';
 import SliceButton from '../components/SliceButton';
+import Sitemap from './Sitemap';
 
 export default function Student() {
   const { student } = useParams();
@@ -23,7 +24,10 @@ export default function Student() {
 
   return (
     <>
-      <div className='flex justify-center mx-auto max-w-5xl  max-h-full'>
+      <div className=''>
+        <Sitemap link='students' />
+      </div>
+      <div className='flex flex-col mx-auto max-w-5xl w-full  max-h-full'>
         <BarChart labels={labels} csvdifficulty={csvDifficulty} csvfun={csvFun} title={student} />
       </div>
       <div className='flex justify-center'>

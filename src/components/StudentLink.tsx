@@ -6,7 +6,7 @@ interface Props {
 }
 
 const StudentLink = ({ name, close }: Props) => {
-  const url = `/${name}`;
+  const url = `/students/${name}`;
   return (
     <Link to={url} onClick={close} className='p-1 hover:bg-slate-200'>
       - {name}

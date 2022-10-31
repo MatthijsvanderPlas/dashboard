@@ -1,6 +1,7 @@
 import { createContext } from 'react';
 import { Outlet, useLoaderData } from 'react-router-dom';
 import NavBar from './components/NavBar';
+import Footer from './pages/Footer';
 
 export interface CsvData {
   name: string;
@@ -27,8 +28,11 @@ const App = () => {
       >
         <NavBar students={students} />
       </div>
-      <div className='mx-auto w-full h-full my-8 p-2'>
+      <div className='w-full'>
         <Outlet context={studentContext._currentValue as CsvData[]} />
+      </div>
+      <div className='fixed bottom-0 left-0 w-full'>
+        <Footer />
       </div>
     </div>
   );

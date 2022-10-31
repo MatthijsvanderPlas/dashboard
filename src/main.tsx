@@ -7,6 +7,8 @@ import Hero from './pages/Hero';
 import Student from './pages/Student';
 import Spreadsheet from './pages/Spreadsheet';
 import About from './pages/About';
+import Contact from './pages/Contact';
+import ErrorBoundary from './pages/ErrorBoundary';
 
 const loader = () => {
   return fetchData();
@@ -15,6 +17,7 @@ const loader = () => {
 const router = createBrowserRouter([
   {
     element: <App />,
+    errorElement: <ErrorBoundary />,
     path: '',
     loader: loader,
     children: [
@@ -23,7 +26,7 @@ const router = createBrowserRouter([
         element: <Hero />,
       },
       {
-        path: '/:student',
+        path: '/students/:student',
         element: <Student />,
       },
       {
@@ -33,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: '/about',
         element: <About />,
+      },
+      {
+        path: '/contact',
+        element: <Contact />,
       },
     ],
   },

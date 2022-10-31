@@ -30,8 +30,17 @@ const NavBar = ({ students }: { students: string[] }) => {
         <Link to='/spreadsheet' className='px-4 py-3 font-sans text-md hover:bg-slate-200'>
           Spreadsheet
         </Link>
-        <Link to='/about' className='px-4 py-3 font-sans text-md hover:bg-slate-200'>
+        <Link
+          to='/about'
+          className='px-4 py-2 mt-6 text-slate-500 text-xs font-sans text-md hover:bg-slate-200'
+        >
           About
+        </Link>
+        <Link
+          to='/contact'
+          className='px-4 py-2 text-slate-500 text-xs font-sans text-md hover:bg-slate-200'
+        >
+          Contact us
         </Link>
       </div>
     </div>
