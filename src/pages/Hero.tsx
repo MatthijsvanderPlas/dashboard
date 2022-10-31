@@ -23,7 +23,7 @@ export default function Hero() {
   return (
     <>
       <div>
-        <Sitemap />
+        <Sitemap link='' />
       </div>
       <div className='flex justify-center mx-auto max-w-5xl max-h-full '>
         <BarChart
