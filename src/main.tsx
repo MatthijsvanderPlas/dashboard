@@ -9,6 +9,7 @@ import Spreadsheet from './pages/Spreadsheet';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import ErrorBoundary from './pages/ErrorBoundary';
+import Students from './pages/Students';
 
 const loader = () => {
   return fetchData();
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: '/students/:student',
         element: <Student />,
+      },
+      {
+        path: '/students',
+        element: <Students />,
       },
       {
         path: '/spreadsheet',

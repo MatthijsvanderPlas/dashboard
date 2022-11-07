@@ -21,7 +21,9 @@ const NavBar = ({ students }: { students: string[] }) => {
           Home
         </Link>
         <button
-          className='px-4 py-3 font-sans text-md text-left hover:bg-slate-200'
+          className={`px-4 py-3 font-sans text-md text-left hover:bg-slate-200 ${
+            isOpen ? 'border-r-[3px] border-[#4e8ac8]' : null
+          }`}
           onClick={() => setIsOpen((prev) => !prev)}
         >
           Students

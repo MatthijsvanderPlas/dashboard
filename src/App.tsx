@@ -1,5 +1,6 @@
 import { createContext } from 'react';
 import { Outlet, useLoaderData } from 'react-router-dom';
+import Breadcrumbs from './components/Breadcrumbs';
 import NavBar from './components/NavBar';
 import Footer from './pages/Footer';
 
@@ -25,6 +26,7 @@ const App = () => {
         <NavBar students={students} />
       </div>
       <div className='w-full'>
+        <Breadcrumbs />
         <Outlet context={studentContext._currentValue as CsvData[]} />
       </div>
       <div className='fixed bottom-0 left-0 w-full'>

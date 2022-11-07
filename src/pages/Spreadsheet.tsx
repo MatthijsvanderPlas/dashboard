@@ -1,8 +1,4 @@
-import React from 'react';
-
-type Props = {};
-
-function Spreadsheet({}: Props) {
+function Spreadsheet() {
   return <div>Spreadsheet</div>;
 }
 

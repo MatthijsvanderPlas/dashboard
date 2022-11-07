@@ -7,7 +7,7 @@ interface Props {
 
 const StudentModal = ({ students, close }: Props) => {
   return (
-    <div className='flex flex-col bg-white  p-4  w-full  before:content-center backdrop:bg-black'>
+    <div className='flex absolute min- h-screen top-28 left-[278px] flex-col bg-white p-4 transition-all'>
       {students
         ? students.map((student) => <StudentLink key={student} name={student} close={close} />)
         : null}
