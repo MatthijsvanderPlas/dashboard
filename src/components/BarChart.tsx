@@ -8,15 +8,16 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+import { Data } from '~/useStore';
 
-const CustomBarChart = ({ studentData }) => {
-  console.log(studentData);
+const Example = ({ data }: { data: Data[] }) => {
+  const tickFormat = ({ payload }) => {
+    return payload.value.toString();
+  };
 
   return (
-    <ResponsiveContainer width='100%' height='100%'>
+    <ResponsiveContainer width='100%' height={300}>
       <BarChart
-        width={500}
-        height={300}
         data={data}
         margin={{
           top: 5,
@@ -26,15 +27,15 @@ const CustomBarChart = ({ studentData }) => {
         }}
       >
         <CartesianGrid strokeDasharray='3 3' />
-        <XAxis dataKey='name' />
-        <YAxis />
+        <XAxis dataKey='assignment' tick={tickFormat} />
+        <YAxis domain={[0, 4]} />
         <Tooltip />
-        <Legend />
-        <Bar dataKey='pv' fill='#8884d8' />
-        <Bar dataKey='uv' fill='#82ca9d' />
+        <Legend align='left' />
+        <Bar dataKey='difficulty' fill='#8884d8' />
+        <Bar dataKey='fun' fill='#82ca9d' />
       </BarChart>
     </ResponsiveContainer>
   );
 };
 
-export default CustomBarChart;
+export default Example;
