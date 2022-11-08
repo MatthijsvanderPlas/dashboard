@@ -9,8 +9,8 @@ export default function Hero() {
 
   return (
     <>
-      <div className='flex mx-auto m-4 max-w-2xl max-h-full overflow-x-scroll'>
-        {data ? <BarChart data={data} /> : <>Loading...</>}
+      <div className='flex mx-auto m-4 max-w-2xl h-[300px] max-h-full overflow-x-scroll'>
+        <BarChart />
       </div>
     </>
   );

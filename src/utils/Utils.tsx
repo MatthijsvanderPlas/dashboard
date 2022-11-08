@@ -1,11 +1,8 @@
 import { CsvData } from '~/App';
 import { CsvKey } from '~/useStore';
 
-export const getAveragePerAssignment = (
-  array: CsvData[],
-  key: CsvKey,
-  assignmentArray: string[],
-): number[] => {
+export const getAveragePerAssignment = (array: CsvData[], key: CsvKey): number[] => {
+  const assignmentArray = getUniqueArray(array, 'assignment');
   const group = assignmentArray.map((item) => {
     const filteredOnAssignment: number[] = array
       .filter((entry) => entry.assignment === item)
@@ -16,4 +13,10 @@ export const getAveragePerAssignment = (
     );
   });
   return group;
+};
+
+export const getUniqueArray = (array: Partial<CsvData[]>, key: CsvKey): string[] => {
+  const uniqueArray = Array.from(new Set(array.map((item) => item?.[key] as string)));
+
+  return uniqueArray;
 };
