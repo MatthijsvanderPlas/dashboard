@@ -13,9 +13,12 @@
     "format": "npm run prettier:fix && npm run lint:fix"
   },
   "dependencies": {
-    "@nivo/bar": "^0.80.0",
-    "@nivo/core": "^0.80.0",
-    "@nivo/tooltip": "^0.80.0",
+    "@visx/gradient": "^2.10.0",
+    "@visx/group": "^2.10.0",
+    "@visx/mock-data": "^2.15.1",
+    "@visx/responsive": "^2.10.0",
+    "@visx/scale": "^2.2.2",
+    "@visx/shape": "^2.12.2",
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",

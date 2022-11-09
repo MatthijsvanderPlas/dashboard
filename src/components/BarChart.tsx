@@ -1,83 +1,41 @@
-import { ResponsiveBar, Bar } from '@nivo/bar';
+import React, { useMemo } from 'react';
+import { Bar } from '@visx/shape';
+import { Group } from '@visx/group';
+import { GradientTealBlue } from '@visx/gradient';
+import letterFrequency, { LetterFrequency } from '@visx/mock-data/lib/mocks/letterFrequency';
+import { scaleBand, scaleLinear } from '@visx/scale';
+
+const rawData = [
+  {
+    name: 'Bitcoin',
+    price: 10,
+    base: 'USD',
+    date: '1560507303',
+    creator: 'Satoshi Nakamoto',
+  },
+  {
+    name: 'Bitcoin',
+    price: 12,
+    base: 'USD',
+    date: '1560507303',
+    creator: 'Satoshi Nakamoto',
+  },
+];
+
+const getPrice = (value: number) => value * 100;
+
+const getDate = (date: number) => new Date(date * 100);
+
+const data = rawData.map((d) => ({
+  price: getPrice(d.price),
+  date: getDate(Number(d.date)),
+}));
 
 const Example = () => {
-  const data = [
-    {
-      day: 'Monday',
-      degrees: 59,
-    },
-    {
-      day: 'Tuesday',
-      degrees: 61,
-    },
-    {
-      day: 'Wednesday',
-      degrees: 55,
-    },
-    {
-      day: 'Thursday',
-      degrees: 78,
-    },
-    {
-      day: 'Thurs',
-      degrees: 78,
-    },
-    {
-      day: 'Thury',
-      degrees: 78,
-    },
-    {
-      day: 'ay',
-      degrees: 78,
-    },
-    {
-      day: 'y',
-      degrees: 78,
-    },
-    {
-      day: 'day',
-      degrees: 78,
-    },
-    {
-      day: 'Thursday',
-      degrees: 78,
-    },
-    {
-      day: 'Thursday',
-      degrees: 78,
-    },
-    {
-      day: 'Thursday',
-      degrees: 78,
-    },
-    {
-      day: 'Thursday',
-      degrees: 78,
-    },
-  ];
-
   return (
-    <ResponsiveBar
-      data={data}
-      keys={['degrees']}
-      indexBy='day'
-      margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-      padding={0.4}
-      valueScale={{ type: 'linear' }}
-      colors='#3182CE'
-      animate={true}
-      enableLabel={false}
-      axisTop={null}
-      axisRight={null}
-      axisLeft={{
-        tickSize: 5,
-        tickPadding: 5,
-        tickRotation: 0,
-        legend: 'degrees',
-        legendPosition: 'middle',
-        legendOffset: -40,
-      }}
-    />
+    <svg width={300} height={200}>
+      <rect width={20} height={20} fill='orange'></rect>
+    </svg>
   );
 };
 
