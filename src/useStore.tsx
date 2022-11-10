@@ -18,6 +18,7 @@ const useStore = (allStudentData: CsvData[]) => {
         return { assignment: value, difficulty: difficultyArray[index], fun: funArray[index] };
       }),
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { data };
