@@ -4,10 +4,10 @@ import { scaleBand, scaleLinear } from '@visx/scale';
 import { Group } from '@visx/group';
 import { AxisBottom, AxisLeft } from '@visx/axis';
 import { Bar } from '@visx/shape';
-import { defaultStyles, useTooltip, TooltipWithBounds, useTooltipInPortal } from '@visx/tooltip';
+import { defaultStyles, useTooltip, useTooltipInPortal } from '@visx/tooltip';
 import { TouchEvent, MouseEvent } from 'react';
 import { localPoint } from '@visx/event';
-import { timeFormat } from 'd3-time-format';
+
 // data
 const data = appleStock.slice(0, 10);
 
@@ -24,7 +24,7 @@ const getYValue = (d: AppleStock) => d.close;
 
 const tooltipStyles = {
   ...defaultStyles,
-  boderRadius: 4,
+  borderRadius: 4,
   background: 'black',
   color: 'white',
   fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen"',
@@ -52,12 +52,6 @@ const Example = () => {
     range: [innerHeight, margin],
     domain: [Math.min(...data.map(getYValue)) - 2, Math.max(...data.map(getYValue)) + 2],
   });
-
-  type DateTimeFormatOptions = {
-    weekday?: string;
-    month?: string;
-    year?: string;
-  };
 
   return (
     <div ref={ref}>
