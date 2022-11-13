@@ -2,8 +2,8 @@ import { BsGithub, BsLinkedin, BsTwitter } from 'react-icons/bs';
 
 function Footer() {
   return (
-    <div className='p-2 bg-neutral-300 flex items-center'>
-      <p className='text-xs'>
+    <div className='relative p-2 bg-neutral-300 flex items-center'>
+      <p className='absolute text-xs'>
         Copyright &copy; {new Date().getFullYear()}{' '}
         <a
           href='https://www.stardash.nl'

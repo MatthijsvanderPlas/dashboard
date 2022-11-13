@@ -10,7 +10,7 @@ export default function Hero() {
 
   return (
     <>
-      <div className='flex mx-auto m-4 max-w-2xl h-[450px] max-h-full overflow-x-scroll'>
+      <div className='flex mx-auto m-4 max-w-2xl h-[450px] max-h-full overflow-x-scroll overflow-y-hidden'>
         {data.length ? (
           <ParentSize>
             {({ width, height }) => (

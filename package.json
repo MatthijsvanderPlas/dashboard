@@ -17,6 +17,7 @@
     "@visx/event": "^2.6.0",
     "@visx/gradient": "^2.10.0",
     "@visx/group": "^2.10.0",
+    "@visx/legend": "^2.10.0",
     "@visx/mock-data": "^2.15.1",
     "@visx/responsive": "^2.10.0",
     "@visx/scale": "^2.2.2",
