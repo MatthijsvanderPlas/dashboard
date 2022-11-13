@@ -1,16 +1,23 @@
-// import { useOutletContext } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 import BarChart from '~/components/BarChart';
-// import { CsvData } from '~/App';
-// import useStore, { Data } from '~/useStore';
+import ParentSize from '@visx/responsive/lib/components/ParentSizeModern';
+import { CsvData } from '~/App';
+import useStore, { Data } from '~/useStore';
 
 export default function Hero() {
-  // const allStudentData: CsvData[] = useOutletContext();
-  // const { data }: { data: Data[] } = useStore(allStudentData);
+  const allStudentData: CsvData[] = useOutletContext();
+  const { data }: { data: Data[] } = useStore(allStudentData);
 
   return (
     <>
-      <div className='flex mx-auto m-4 max-w-2xl h-[350px] max-h-full'>
-        <BarChart />
+      <div className='flex mx-auto m-4 max-w-2xl h-[450px] max-h-full overflow-x-scroll'>
+        {data.length ? (
+          <ParentSize>
+            {({ width, height }) => (
+              <BarChart width={width + data.length * 50} height={height} data={data} />
+            )}
+          </ParentSize>
+        ) : null}
       </div>
     </>
   );

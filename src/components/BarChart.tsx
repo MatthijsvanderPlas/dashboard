@@ -1,124 +1,160 @@
-import appleStock, { AppleStock } from '@visx/mock-data/lib/mocks/appleStock';
-import useMeasure from 'react-use-measure';
-import { scaleBand, scaleLinear } from '@visx/scale';
+import { scaleBand, scaleLinear, scaleOrdinal } from '@visx/scale';
 import { Group } from '@visx/group';
 import { AxisBottom, AxisLeft } from '@visx/axis';
-import { Bar } from '@visx/shape';
-import { defaultStyles, useTooltip, useTooltipInPortal } from '@visx/tooltip';
-import { TouchEvent, MouseEvent } from 'react';
-import { localPoint } from '@visx/event';
+import { BarGroup } from '@visx/shape';
+import { Text } from '@visx/text';
 
-// data
-const data = appleStock.slice(0, 10);
+type keys = 'difficulty' | 'fun';
 
-// margins
-const margin = 32;
-
-// width and height
-const defaultWidth = 500;
-const defaultHeight = 300;
-
-// selectors
-const getXValue = (d: AppleStock) => d.date;
-const getYValue = (d: AppleStock) => d.close;
-
-const tooltipStyles = {
-  ...defaultStyles,
-  borderRadius: 4,
-  background: 'black',
-  color: 'white',
-  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen"',
+type DataProps = {
+  assignment: string;
+  difficulty: number;
+  fun: number;
 };
 
-const Example = () => {
-  const [ref, bounds] = useMeasure();
-  const { showTooltip, hideTooltip, tooltipData, tooltipLeft, tooltipTop } =
-    useTooltip<AppleStock>();
-  const { containerRef, TooltipInPortal } = useTooltipInPortal();
+type BarGroupProps = {
+  data: DataProps[];
+  width: number;
+  height: number;
+  events?: boolean;
+  margin?: { top: number; right: number; bottom: number; left: number };
+};
 
-  const width = bounds.width || defaultWidth;
-  const height = bounds.height || defaultHeight;
+// margins
+const defaultMargin = { top: 64, right: 64, bottom: 64, left: 64 };
 
-  const innerWidth = width - margin * 2;
-  const innerHeight = height - margin * 2;
+// colors
+const blue = '#0000FF';
+const red = '#FF0000';
 
-  const xScale = scaleBand<string>({
-    range: [margin, innerWidth],
-    domain: data.map(getXValue),
+const Example = ({
+  data,
+  width,
+  height,
+  events = false,
+  margin = defaultMargin,
+}: BarGroupProps) => {
+  // keys
+  const keys = Object.keys(data[0]).filter((d) => d !== 'assignment') as keys[];
+
+  // scales
+  const assignmentScale = scaleBand<string>({
+    domain: data.map((d) => d.assignment as string),
+    padding: 0.01,
+  });
+
+  const keyScale = scaleBand<string>({
+    domain: keys,
     padding: 0.2,
   });
 
-  const yScale = scaleLinear<number>({
-    range: [innerHeight, margin],
-    domain: [Math.min(...data.map(getYValue)) - 2, Math.max(...data.map(getYValue)) + 2],
+  const gradeScale = scaleLinear<number>({
+    domain: [0, Math.max(...data.map((d) => d.difficulty))],
   });
 
+  const colorScale = scaleOrdinal<string, string>({
+    domain: keys,
+    range: [blue, red],
+  });
+
+  const xMax = width - margin.left - margin.right;
+  const yMax = height - margin.top - margin.bottom;
+
+  //update scale output dimensions
+  assignmentScale.rangeRound([0, xMax]);
+  keyScale.rangeRound([0, assignmentScale.bandwidth()]);
+  gradeScale.range([yMax, 0]);
+
   return (
-    <div ref={ref}>
-      <svg ref={containerRef} width='100%' height='100%' viewBox={`0 0 ${width} ${height}`}>
-        <Group>
-          {data.map((d) => {
-            const xValue = getXValue(d);
-            const barWidth = xScale.bandwidth();
-            const barHeight = innerHeight - (yScale(getYValue(d)) ?? 0);
-            const barX = xScale(xValue);
-            const barY = innerHeight - barHeight;
-
-            return (
-              <Bar
-                key={`bar-${xValue}`}
-                x={barX}
-                y={barY}
-                width={barWidth}
-                height={barHeight}
-                fill='orange'
-                onMouseMove={(event: TouchEvent<SVGRectElement> | MouseEvent<SVGRectElement>) => {
-                  const point = localPoint(event);
-
-                  if (!point) return;
-
-                  showTooltip({
-                    tooltipData: d,
-                    tooltipLeft: point.x - 60,
-                    tooltipTop: point.y - 40,
-                  });
-                }}
-                onMouseLeave={() => hideTooltip()}
-              />
-            );
-          })}
-        </Group>
-        <Group>
-          <AxisBottom
-            top={innerHeight}
-            scale={xScale}
-            tickFormat={(date) =>
-              new Date(date).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' })
-            }
-          />
-        </Group>
-        <Group>
-          <AxisLeft left={margin} scale={yScale} />
-        </Group>
-      </svg>
-      {tooltipData ? (
-        <TooltipInPortal
-          key={Math.random()}
-          top={tooltipTop}
-          left={tooltipLeft}
-          style={tooltipStyles}
+    <svg width={width} height={height}>
+      <rect x={0} y={0} width={width} height={height} rx={14} fill='white' />
+      <Group top={margin.top} left={margin.left}>
+        <BarGroup
+          data={data}
+          keys={keys}
+          height={yMax}
+          x0={(d) => d.assignment as string}
+          x0Scale={assignmentScale}
+          x1Scale={keyScale}
+          yScale={gradeScale}
+          color={colorScale}
         >
-          <b>
-            {new Date(getXValue(tooltipData)).toLocaleDateString('nl-NL', {
-              day: 'numeric',
-              month: 'short',
-              year: '2-digit',
-            })}
-          </b>{' '}
-          : $ {getYValue(tooltipData)}
-        </TooltipInPortal>
-      ) : null}
-    </div>
+          {(barGroups) =>
+            barGroups.map((barGroup) => (
+              <Group key={`bar-group-${barGroup.index}-${barGroup.x0}`} left={barGroup.x0}>
+                {barGroup.bars.map((bar) => (
+                  <rect
+                    key={`bar-group-bar-${barGroup.index}-${bar.index}-${bar.value}-${bar.key}`}
+                    x={bar.x}
+                    y={bar.y}
+                    width={bar.width}
+                    height={bar.height}
+                    fill={bar.color}
+                    fillOpacity={0.35}
+                    stroke={bar.color}
+                    rx={4}
+                    onClick={() => {
+                      if (!events) return;
+                      const { key, value } = bar;
+                      alert(JSON.stringify({ key, value }));
+                    }}
+                  />
+                ))}
+              </Group>
+            ))
+          }
+        </BarGroup>
+      </Group>
+      <AxisLeft
+        label='Grade'
+        labelOffset={36}
+        labelProps={{
+          x: -margin.top,
+          fontSize: 14,
+        }}
+        left={margin.left}
+        top={margin.top}
+        scale={gradeScale}
+        hideZero
+        // tickValues={() => {}}
+        tickLength={5}
+        tickLabelProps={() => ({
+          textAnchor: 'end',
+          fontSize: 14,
+          dx: -7,
+        })}
+      />
+      <AxisBottom
+        label='Assignment ->'
+        labelProps={{
+          fontSize: 12,
+          x: width / 2,
+        }}
+        top={yMax + margin.top}
+        left={margin.left}
+        scale={assignmentScale}
+        tickComponent={(d) => {
+          if (d.formattedValue) {
+            return d.formattedValue.length > 10 ? (
+              d.formattedValue === 'W4D3 - Project - Next-Level CSS' ? (
+                <Text x={d.x} y={d.y} textAnchor='middle' dy='35' width={20} fontSize='10'>
+                  {d.formattedValue?.replaceAll(' - ', ' ')}
+                </Text>
+              ) : (
+                <Text x={d.x} y={d.y} textAnchor='middle' dy='25' width={20} fontSize='10'>
+                  {d.formattedValue?.replaceAll(' - ', ' ')}
+                </Text>
+              )
+            ) : (
+              <Text x={d.x} y={d.y} textAnchor='middle' dy='5' width={20} fontSize='10'>
+                {d.formattedValue}
+              </Text>
+            );
+          } else return null;
+        }}
+        numTicks={data.length}
+      />
+    </svg>
   );
 };
 

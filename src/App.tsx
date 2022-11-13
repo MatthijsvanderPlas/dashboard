@@ -2,7 +2,7 @@ import { createContext } from 'react';
 import { Outlet, useLoaderData } from 'react-router-dom';
 import Breadcrumbs from './components/Breadcrumbs';
 import NavBar from './components/NavBar';
-import Footer from './pages/Footer';
+import Footer from './components/Footer';
 
 export interface CsvData {
   name: string;
