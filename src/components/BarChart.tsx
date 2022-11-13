@@ -6,7 +6,7 @@ import { Text } from '@visx/text';
 
 type keys = 'difficulty' | 'fun';
 
-type DataProps = {
+export type DataProps = {
   assignment: string;
   difficulty: number;
   fun: number;

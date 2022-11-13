@@ -1,5 +1,5 @@
 import { useOutletContext } from 'react-router-dom';
-import BarChart from '~/components/BarChart';
+import BarChart, { DataProps } from '~/components/BarChart';
 import ParentSize from '@visx/responsive/lib/components/ParentSizeModern';
 import { CsvData } from '~/App';
 import useStore, { Data } from '~/useStore';
@@ -14,7 +14,11 @@ export default function Hero() {
         {data.length ? (
           <ParentSize>
             {({ width, height }) => (
-              <BarChart width={width + data.length * 50} height={height} data={data} />
+              <BarChart
+                width={width + data.length * 50}
+                height={height}
+                data={data as DataProps[]}
+              />
             )}
           </ParentSize>
         ) : null}
