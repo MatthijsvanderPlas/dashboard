@@ -4,10 +4,9 @@ import StudentLink from './StudentLink';
 
 interface Props {
   close: () => void;
-  open: boolean;
 }
 
-const StudentModal = ({ close, open }: Props) => {
+const StudentModal = ({ close }: Props) => {
   const students = useAppSelector(selectStudentsObject);
 
   return (

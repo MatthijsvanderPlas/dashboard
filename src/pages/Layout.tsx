@@ -8,7 +8,7 @@ const Footer = React.lazy(() => import(`~/components/Footer`));
 function Layout() {
   return (
     <div className='m-0 p-0 flex flex-col lg:flex-row overflow-hidden'>
-      <div className='border-r-10 max-w-[248px] border-r-slate-500 box-border'>
+      <div className='border-r-10 max-w-[250px] border-r-slate-500 box-border'>
         <NavBar />
       </div>
       <div className='relative left-[250px] w-screen'>
