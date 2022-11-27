@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
-import { CsvData } from './App';
+import { CsvData, Data } from './utils/types';
 import { getAveragePerAssignment, getUniqueArray } from './utils/Utils';
-
-export type CsvKey = keyof CsvData;
-export type Data = Partial<CsvData>;
 
 const useStore = (allStudentData: CsvData[]) => {
   const [data, setData] = useState<Data[]>([]);

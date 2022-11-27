@@ -1,14 +1,15 @@
 import { Link } from 'react-router-dom';
 
 interface Props {
+  key: number;
   name: string;
   close: () => void;
 }
 
-const StudentLink = ({ name, close }: Props) => {
+const StudentLink = ({ key, name, close }: Props) => {
   const url = `/students/${name}`;
   return (
-    <Link to={url} onClick={close} className='p-1 hover:bg-slate-200'>
+    <Link key={key} to={url} onClick={close} className='p-1 hover:bg-slate-200'>
       - {name}
     </Link>
   );

@@ -1,39 +1,33 @@
-import { createContext } from 'react';
-import { Outlet, useLoaderData } from 'react-router-dom';
-import Breadcrumbs from './components/Breadcrumbs';
-import NavBar from './components/NavBar';
-import Footer from './components/Footer';
-
-export interface CsvData {
-  name: string;
-  assignment: string;
-  difficulty: number;
-  fun: number;
-}
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from 'react-router-dom';
+import Layout from '~/pages/Layout';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import ErrorBoundary from './pages/ErrorBoundary';
+import Hero from './pages/Hero';
+import Spreadsheet from './pages/Spreadsheet';
+import Student from './pages/Student';
+import Students from './pages/Students';
 
 const App = () => {
-  const studentContext: any = createContext(useLoaderData());
-  const students: string[] = Array.from(
-    new Set(studentContext._currentValue.map((item: CsvData) => item.name)),
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path='/' element={<Layout />} errorElement={<ErrorBoundary />}>
+        <Route path='/' element={<Hero />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/spreadsheet' element={<Spreadsheet />} />
+        <Route path='/contact' element={<Contact />} />
+        <Route path='/students' element={<Students />} />
+        <Route path='/students/:id' element={<Student />} />
+      </Route>,
+    ),
   );
 
-  return (
-    <div className='m-0 p-0 flex flex-col lg:flex-row '>
-      <div
-        className='flex lg:flex-row justify-center lg:border-r-[1.5px] lg:border-slate-400 lg:border-b-0  border-b border-x-gray-400 h-12 lg:h-full
-       overflow-hidden min-w-[250px]'
-      >
-        <NavBar students={students} />
-      </div>
-      <div className='w-full'>
-        <Breadcrumbs />
-        <Outlet context={studentContext._currentValue as CsvData[]} />
-      </div>
-      <div className='fixed bottom-0 left-0 w-full'>
-        <Footer />
-      </div>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;

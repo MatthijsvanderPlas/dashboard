@@ -1,5 +1,4 @@
-import { CsvData } from '~/App';
-import { CsvKey } from '~/useStore';
+import { CsvData, CsvKey } from '~/utils/types';
 
 export const getAveragePerAssignment = (array: CsvData[], key: CsvKey): number[] => {
   const assignmentArray = getUniqueArray(array, 'assignment');

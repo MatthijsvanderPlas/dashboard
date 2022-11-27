@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import StudentModal from './StudentModal';
 import winc from '../assets/winc.svg';
 
-const NavBar = ({ students }: { students: string[] }) => {
+const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => {
@@ -11,9 +11,9 @@ const NavBar = ({ students }: { students: string[] }) => {
   };
 
   return (
-    <div className='flex lg:flex-col lg:min-h-full  h-screen w-full  max-w-5xl  items-center'>
+    <div className='flex fixed top-0 left-0 lg:flex-col lg:min-h-full  h-screen w-full  max-w-[230px]  items-center border-r-[1.5px] border-r-slate-300'>
       <div className='flex  px-2 -z-10  items-center'>
-        <img src={winc} alt='winc logo' className='max-h-[40px] my-4 ml-4 '></img>
+        <img src={winc} alt='winc logo' className='max-h-[40px] my-4 ml-8 '></img>
         <p className='px-2 w-[250px] text-lg font-bold text-[#4e8ac8]'>Student Dashboard</p>
       </div>
       <div className='flex lg: py-8 lg:flex-col w-full justify-center'>
@@ -21,14 +21,14 @@ const NavBar = ({ students }: { students: string[] }) => {
           Home
         </Link>
         <button
-          className={`px-4 relative py-3 font-sans text-md text-left hover:bg-slate-200 ${
+          className={`px-4 py-3 font-sans text-md text-left hover:bg-slate-200 ${
             isOpen ? 'border-r-[3px] border-[#4e8ac8]' : null
           }`}
           onClick={() => setIsOpen((prev) => !prev)}
         >
           Students
         </button>
-        {isOpen ? <StudentModal students={students} close={handleClick} /> : null}
+        {isOpen ? <StudentModal close={handleClick} /> : null}
         <Link to='/spreadsheet' className='px-4 py-3 font-sans text-md hover:bg-slate-200'>
           Spreadsheet
         </Link>

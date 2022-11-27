@@ -1,16 +1,20 @@
+import { useAppSelector } from '~/store/hooks';
+import { selectStudentsObject } from '~/store/selectors';
 import StudentLink from './StudentLink';
 
 interface Props {
-  students: string[];
   close: () => void;
+  open: boolean;
 }
 
-const StudentModal = ({ students, close }: Props) => {
+const StudentModal = ({ close, open }: Props) => {
+  const students = useAppSelector(selectStudentsObject);
+
   return (
-    <div className='flex absolute z-10  h-screen top-28 left-[278px] flex-col bg-white p-4 transition-all'>
-      {students
-        ? students.map((student) => <StudentLink key={student} name={student} close={close} />)
-        : null}
+    <div className='flex relative  -z-30  h-screen left-[240px] flex-col bg-white p-4 transition-all'>
+      {Object.entries(students).map((student) => (
+        <StudentLink key={student[1].id} name={student[1].student} close={close} />
+      ))}
     </div>
   );
 };

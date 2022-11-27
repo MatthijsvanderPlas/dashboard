@@ -1,139 +1,95 @@
-import { scaleBand, scaleLinear, scaleOrdinal } from '@visx/scale';
+import { AxisBottom, AxisLeft, AxisScale } from '@visx/axis';
 import { Group } from '@visx/group';
-import { AxisBottom, AxisLeft } from '@visx/axis';
+import { scaleOrdinal } from '@visx/scale';
 import { BarGroup } from '@visx/shape';
+import { AnyScaleBand } from '@visx/shape/lib/types';
 import { Text } from '@visx/text';
-import { LegendItem, LegendLabel, LegendOrdinal } from '@visx/legend';
+import { DataProps, keys } from './Charting';
 
-type keys = 'difficulty' | 'fun';
-
-export type DataProps = {
-  assignment: string;
-  difficulty: number;
-  fun: number;
-};
-
-type BarGroupProps = {
-  data: DataProps[];
-  width: number;
-  height: number;
-  events?: boolean;
-  margin?: { top: number; right: number; bottom: number; left: number };
-};
-
-// margins
-const defaultMargin = { top: 64, right: 64, bottom: 74, left: 64 };
-
-// colors
-const blue = '#0000FF';
-const red = '#FF0000';
-
-const Example = ({
+const BarChart = ({
   data,
-  width,
-  height,
+  yMax,
+  margin,
+  gradeScale,
+  keyScale,
+  assignmentScale,
+  keys,
+  xMax,
   events = false,
-  margin = defaultMargin,
-}: BarGroupProps) => {
-  // keys
-  const keys = Object.keys(data[0]).filter((d) => d !== 'assignment') as keys[];
-
-  // scales
-  const assignmentScale = scaleBand<string>({
-    domain: data.map((d) => d.assignment as string),
-    padding: 0.01,
-  });
-
-  const keyScale = scaleBand<string>({
-    domain: keys,
-    padding: 0.2,
-  });
-
-  const gradeScale = scaleLinear<number>({
-    domain: [0, Math.max(...data.map((d) => d.difficulty))],
-  });
-
+  left,
+  top,
+  children,
+  hideLeftAxis = false,
+  hideBottomAxis = false,
+}: {
+  data: DataProps[];
+  keys: keys[];
+  yMax: number;
+  xMax: number;
+  assignmentScale: AnyScaleBand;
+  keyScale: AnyScaleBand;
+  gradeScale: AxisScale<number>;
+  margin: { top: number; right: number; left: number; bottom: number };
+  events?: boolean;
+  top?: number;
+  left?: number;
+  children?: React.ReactNode;
+  hideLeftAxis?: boolean;
+  hideBottomAxis?: boolean;
+}) => {
+  // colors
+  const blue = '#0000FF';
+  const red = '#FF0000';
   const colorScale = scaleOrdinal<string, string>({
     domain: keys,
     range: [blue, red],
   });
-
-  const xMax = width - margin.left - margin.right;
-  const yMax = height - margin.top - margin.bottom;
-
-  //update scale output dimensions
-  assignmentScale.rangeRound([0, xMax]);
-  keyScale.rangeRound([0, assignmentScale.bandwidth()]);
-  gradeScale.range([yMax, 0]);
-
   return (
-    <>
-      <LegendOrdinal scale={colorScale} labelFormat={(label) => `${label.toUpperCase()}`}>
-        {(labels) => (
-          <div style={{ display: 'flex', flexDirection: 'row', fontSize: '11px' }}>
-            {labels.map((label, i) => (
-              <LegendItem
-                key={`legend-quantile-${i}`}
-                margin='0 5px'
-                onClick={() => {
-                  if (events) alert(`clicked: ${JSON.stringify(label)}`);
-                }}
-              >
-                <svg width={15} height={15}>
-                  <rect fill={label.value} fillOpacity={0.35} width={15} height={15} />
-                </svg>
-                <LegendLabel align='left' margin='0 0 0 4px'>
-                  {label.text}
-                </LegendLabel>
-              </LegendItem>
-            ))}
-          </div>
-        )}
-      </LegendOrdinal>
-      <svg width={width} height={height}>
-        <rect x={0} y={0} width={width} height={height} rx={14} fill='white' />
-        <Group top={margin.top} left={margin.left}>
-          <BarGroup
-            data={data}
-            keys={keys}
-            height={yMax}
-            x0={(d) => d.assignment as string}
-            x0Scale={assignmentScale}
-            x1Scale={keyScale}
-            yScale={gradeScale}
-            color={colorScale}
-          >
-            {(barGroups) =>
-              barGroups.map((barGroup) => (
-                <Group key={`bar-group-${barGroup.index}-${barGroup.x0}`} left={barGroup.x0}>
-                  {barGroup.bars.map((bar) => (
-                    <rect
-                      key={`bar-group-bar-${barGroup.index}-${bar.index}-${bar.value}-${bar.key}`}
-                      x={bar.x}
-                      y={bar.y}
-                      width={bar.width}
-                      height={bar.height}
-                      fill={bar.color}
-                      fillOpacity={0.35}
-                      stroke={bar.color}
-                      rx={4}
-                      onClick={() => {
-                        if (!events) return;
-                        const { key, value } = bar;
-                        alert(JSON.stringify({ key, value }));
-                      }}
-                    />
-                  ))}
-                </Group>
-              ))
-            }
-          </BarGroup>
-        </Group>
+    <Group left={left || margin.left} top={top || margin.top}>
+      <BarGroup
+        top={margin.top}
+        left={margin.left}
+        data={data}
+        keys={keys}
+        height={yMax}
+        width={xMax}
+        x0={(d) => d.assignment as string}
+        x0Scale={assignmentScale}
+        x1Scale={keyScale}
+        yScale={gradeScale}
+        color={colorScale}
+      >
+        {(barGroups) =>
+          barGroups.map((barGroup) => (
+            <Group key={`bar-group-${barGroup.index}-${barGroup.x0}`} left={barGroup.x0}>
+              {barGroup.bars.map((bar) => (
+                <rect
+                  key={`bar-group-bar-${barGroup.index}-${bar.index}-${bar.value}-${bar.key}`}
+                  x={bar.x + margin.left}
+                  y={bar.y + margin.top}
+                  width={bar.width}
+                  height={bar.height}
+                  fill={bar.color}
+                  fillOpacity={0.35}
+                  stroke={bar.color}
+                  rx={4}
+                  onClick={() => {
+                    if (!events) return;
+                    const { key, value } = bar;
+                    alert(JSON.stringify({ key, value }));
+                  }}
+                />
+              ))}
+            </Group>
+          ))
+        }
+      </BarGroup>
+      {!hideLeftAxis ? (
         <AxisLeft
-          label='Grade'
-          labelOffset={36}
+          label='Grade ->'
+          labelOffset={30}
           labelProps={{
-            x: -margin.top,
+            x: -(margin.top * 4),
             fontSize: 14,
           }}
           left={margin.left}
@@ -148,11 +104,14 @@ const Example = ({
             dx: -7,
           })}
         />
+      ) : null}
+      {!hideBottomAxis ? (
         <AxisBottom
           label='Assignment ->'
           labelProps={{
             fontSize: 12,
-            x: width / 2,
+            x: margin.left,
+            y: margin.bottom * 2.2,
           }}
           top={yMax + margin.top}
           left={margin.left}
@@ -178,9 +137,10 @@ const Example = ({
           }}
           numTicks={data.length}
         />
-      </svg>
-    </>
+      ) : null}
+      {children}
+    </Group>
   );
 };
 
-export default Example;
+export default BarChart;
