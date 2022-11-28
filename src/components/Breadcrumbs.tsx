@@ -5,7 +5,7 @@ import useReactRouterBreadcrumbs from 'use-react-router-breadcrumbs';
 function Breadcrumbs() {
   const location = useReactRouterBreadcrumbs();
   return (
-    <div className=' font-sans flex flex-row text-[12px] m-2'>
+    <div className='z-10 font-sans flex flex-row text-[12px] m-2'>
       {location.map<ReactNode>(({ breadcrumb, key }, index) => (
         <div key={key}>
           <Link

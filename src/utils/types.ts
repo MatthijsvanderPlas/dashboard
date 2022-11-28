@@ -58,3 +58,8 @@ export type BarGroupProps = {
 export type MyParams = {
   id: string;
 };
+
+export interface ILinkContext {
+  clicked: boolean;
+  setClicked: (c: boolean) => void;
+}

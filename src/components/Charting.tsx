@@ -157,7 +157,9 @@ const Example = ({
             margin={brushMargin}
             innerRef={brushRef}
             initialBrushPosition={initialBrushPosition}
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
             onChange={() => {}}
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
             onClick={() => {}}
             selectedBoxStyle={selectedBrushStyle}
             useWindowMoveEvents

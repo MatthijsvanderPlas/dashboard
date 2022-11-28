@@ -4,15 +4,25 @@ import StudentLink from './StudentLink';
 
 interface Props {
   close: () => void;
+  open: boolean;
 }
 
-const StudentModal = ({ close }: Props) => {
+const StudentModal = ({ close, open }: Props) => {
   const students = useAppSelector(selectStudentsObject);
 
   return (
-    <div className='flex relative  -z-30  h-screen left-[240px] flex-col bg-white p-4 transition-all'>
+    <div
+      className={`flex absolute z-20  ${
+        open ? 'visible animate-slide ' : 'animate-out'
+      } top-0 left-[-230px] h-screen w-[230px]  flex-col bg-white pt-16 border-r-[0.5px] border-r-slate-300`}
+    >
       {Object.entries(students).map((student) => (
-        <StudentLink key={student[1].id} name={student[1].student} close={close} />
+        <StudentLink
+          key={student[1].id}
+          id={student[1].id}
+          name={student[1].student}
+          close={close}
+        />
       ))}
     </div>
   );

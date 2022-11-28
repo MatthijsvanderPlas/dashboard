@@ -4,7 +4,7 @@ import { scaleOrdinal } from '@visx/scale';
 import { BarGroup } from '@visx/shape';
 import { AnyScaleBand } from '@visx/shape/lib/types';
 import { Text } from '@visx/text';
-import { DataProps, keys } from './Charting';
+import { DataProps, Keys } from '~/utils/types';
 
 const BarChart = ({
   data,
@@ -23,7 +23,7 @@ const BarChart = ({
   hideBottomAxis = false,
 }: {
   data: DataProps[];
-  keys: keys[];
+  keys: Keys[];
   yMax: number;
   xMax: number;
   assignmentScale: AnyScaleBand;

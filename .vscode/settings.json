@@ -8,6 +8,7 @@
     "source.fixAll.eslint"
   ],
   "cSpell.words": [
-    "newstudent"
+    "newstudent",
+    "normalizr"
   ]
 }
