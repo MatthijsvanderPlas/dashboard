@@ -12,9 +12,9 @@ const StudentModal = ({ close, open }: Props) => {
 
   return (
     <div
-      className={`flex absolute z-20  ${
+      className={`flex relative z-20  ${
         open ? 'visible animate-slide ' : 'animate-out'
-      } top-0 left-[-230px] h-screen w-[230px]  flex-col bg-white pt-16 border-r-[0.5px] border-r-slate-300`}
+      } top-0 left-[0px] h-screen w-[230px]  flex-col bg-white pt-16 border-[1px] border-r-slate-100`}
     >
       {students &&
         Object.entries(students).map((student) => (

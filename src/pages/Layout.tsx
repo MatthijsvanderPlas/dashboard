@@ -14,7 +14,7 @@ function Layout() {
 
   return (
     <div className='relative m-0 p-0 flex flex-col lg:flex-row overflow-hidden'>
-      <div className='relative border-r-10 z-30 max-w-[250px] bg-white'>
+      <div className='fixed border-r-10 z-30 max-w-[230px] bg-white'>
         <NavBar click={handleClick} isOpen={isOpen} />
       </div>
       <div className='relative z-20'>
