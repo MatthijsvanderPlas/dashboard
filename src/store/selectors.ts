@@ -9,6 +9,8 @@ export const getEntity = (id: number) => {
   return (state: RootState) => state?.data?.entities?.[id];
 };
 
+export const getEntities = (state: RootState) => state.data.entities;
+
 export const selectStudentFilter = (state: RootState) => state.filters.studentFilter;
 
 export const selectStudentByName = (name: string) => {

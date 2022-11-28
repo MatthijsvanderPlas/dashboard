@@ -16,14 +16,15 @@ const StudentModal = ({ close, open }: Props) => {
         open ? 'visible animate-slide ' : 'animate-out'
       } top-0 left-[-230px] h-screen w-[230px]  flex-col bg-white pt-16 border-r-[0.5px] border-r-slate-300`}
     >
-      {Object.entries(students).map((student) => (
-        <StudentLink
-          key={student[1].id}
-          id={student[1].id}
-          name={student[1].student}
-          close={close}
-        />
-      ))}
+      {students &&
+        Object.entries(students).map((student) => (
+          <StudentLink
+            key={student[1].id}
+            id={student[1].id}
+            name={student[1].student}
+            close={close}
+          />
+        ))}
     </div>
   );
 };

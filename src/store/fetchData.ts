@@ -23,7 +23,7 @@ const fetchGoogleSheetData = async () => {
   const entities: Entities<StudentData> = {};
 
   students.map((student) => {
-    const id = Number(Math.max(Object.values(entities).length, 0));
+    const id = Number(Math.max(Object.values(entities).length, 0) + 1);
     studentsObject[id] = { id: id, student: student };
     const newstudent = {
       id: id,

@@ -10,7 +10,13 @@ const StudentLink = ({ id, name, close }: Props) => {
   const url = `/students/${name}`;
 
   return (
-    <Link key={id} to={url} onClick={close} className='pl-8 py-1 hover:bg-slate-200'>
+    <Link
+      key={id}
+      to={{ pathname: url }}
+      state={id}
+      onClick={close}
+      className='pl-8 py-1 hover:bg-slate-200'
+    >
       {name}
     </Link>
   );
