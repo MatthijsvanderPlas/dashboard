@@ -1,23 +1,28 @@
-import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
+import Chart from '~/components/Chart';
 import { useAppSelector } from '~/store/hooks';
-import { getEntities } from '~/store/selectors';
+import { selectStudentData } from '~/store/selectors';
+import { ParentSize } from '@visx/responsive';
 
 export default function Student() {
   const id = useLocation().state;
-  const getEntitiesMemoized = useMemo(() => getEntities, []);
-  const currentStudentData = useAppSelector((state) => getEntitiesMemoized(state));
+  const currentStudentData = useAppSelector(selectStudentData(id));
 
   return (
     <>
-      <div className='flex flex-col mx-auto max-w-5xl w-full  max-h-full'>
-        <h2>BarChart</h2>
-
-        {id > 0 &&
-          currentStudentData &&
-          Object.entries(currentStudentData[id].scores).map((score) => (
-            <p key={score[1].a}>{score[1].d}</p>
-          ))}
+      <div className='flex p-4 flex-col mx-auto max-w-4xl max-h-[500px] overflow-scroll'>
+        <h2>{currentStudentData && currentStudentData[0].student}</h2>
+        {currentStudentData && (
+          <ParentSize>
+            {(parent) => (
+              <Chart
+                width={parent.width}
+                height={parent.height}
+                data={currentStudentData.map((d) => d.score)}
+              />
+            )}
+          </ParentSize>
+        )}
       </div>
     </>
   );

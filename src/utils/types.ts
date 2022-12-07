@@ -1,29 +1,53 @@
+export interface IResponseData {
+  Student: string;
+  Assignment: string;
+  Difficulty: number;
+  Fun: number;
+}
+
+export interface IStudent {
+  [index: number]: {
+    id: number;
+    student: string;
+    scores: number[];
+  };
+}
+
+export interface IStudentData {
+  ById: IStudent;
+  AllIds: number[];
+}
+
+export interface IAssignmentObj {
+  [index: number]: {
+    id: number;
+    assignment: string;
+    scores: number[];
+  };
+}
+
+export interface IEntities<T> {
+  ById: { [id: number]: T };
+  AllIds: number[];
+}
+
 export interface StudentData {
   id: number;
   student: string;
-  scores: {
-    a: string;
-    d: number;
-    f: number;
-  }[];
+  score: { assignment: string; difficulty: number; fun: number };
 }
 
-export interface Entities<T> {
-  [index: number]: T;
-}
-
-export interface dataSliceProps {
-  students: Student<StudentById>;
-  assignments: string[];
-  entities: Entities<StudentData>;
-  status: string | null;
-}
-
-export interface CsvData {
-  name: string;
+export interface IScore {
   assignment: string;
   difficulty: number;
   fun: number;
+}
+
+export interface dataSliceProps {
+  students: IStudentData;
+  assignments: IAssignmentObj;
+  entities: IEntities<StudentData>;
+  status: string | null;
 }
 
 export interface StudentById {
@@ -35,10 +59,6 @@ export interface Student<T> {
   [index: number]: T;
 }
 
-export type CsvKey = keyof CsvData;
-
-export type Data = Partial<CsvData>;
-
 export type Keys = 'difficulty' | 'fun';
 
 export type DataProps = {
@@ -48,15 +68,11 @@ export type DataProps = {
 };
 
 export type BarGroupProps = {
-  data: DataProps[];
+  data: IScore[];
   width: number;
   height: number;
   events?: boolean;
   margin?: { top: number; right: number; bottom: number; left: number };
-};
-
-export type MyParams = {
-  id: string;
 };
 
 export interface ILinkContext {

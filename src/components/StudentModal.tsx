@@ -17,13 +17,8 @@ const StudentModal = ({ close, open }: Props) => {
       } top-0 left-[0px] h-screen w-[230px]  flex-col bg-white pt-16 border-[1px] border-r-slate-100`}
     >
       {students &&
-        Object.entries(students).map((student) => (
-          <StudentLink
-            key={student[1].id}
-            id={student[1].id}
-            name={student[1].student}
-            close={close}
-          />
+        Object.values(students).map((student) => (
+          <StudentLink key={student.id} id={student.id} name={student.student} close={close} />
         ))}
     </div>
   );

@@ -1,7 +1,7 @@
 function Contact() {
   return (
     <>
-      <div className='flex mx-auto max-w-5xl'>Contact</div>
+      <div className='flex mx-auto max-w-4xl'>Contact</div>
     </>
   );
 }

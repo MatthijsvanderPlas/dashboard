@@ -1,15 +1,28 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { dataSliceProps } from '~/utils/types';
-import fetchGoogleSheetData from './fetchData';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import fetchGoogleSheetData from '../api/fetchData';
 
 export const fetchData = createAsyncThunk('data/fetchData', async () => {
   const response = await fetchGoogleSheetData();
   return response;
 });
 
+const initialState: dataSliceProps = {
+  students: {
+    ById: {},
+    AllIds: [],
+  },
+  assignments: {},
+  entities: {
+    ById: {},
+    AllIds: [],
+  },
+  status: 'idle',
+};
+
 const dataSlice = createSlice({
   name: 'data',
-  initialState: {} as dataSliceProps,
+  initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -17,7 +30,7 @@ const dataSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(fetchData.fulfilled, (state, action) => {
-        state.students = action.payload.studentsObject;
+        state.students = action.payload.students;
         state.assignments = action.payload.assignments;
         state.entities = action.payload.entities;
         state.status = 'idle';

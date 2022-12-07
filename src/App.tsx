@@ -7,16 +7,8 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import LoadingSpinner from './components/LoadingSpinner';
-// import Layout from '~/pages/Layout';
-// import About from './pages/About';
-// import Contact from './pages/Contact';
-// import ErrorBoundary from './pages/ErrorBoundary';
-// import Hero from './pages/Hero';
-// import Spreadsheet from './pages/Spreadsheet';
-// import Student from './pages/Student';
-// import Students from './pages/Students';
+import Layout from '~/pages/Layout';
 
-const Layout = lazy(() => import(`~/pages/Layout`));
 const ErrorBoundary = lazy(() => import(`~/pages/ErrorBoundary`));
 const Hero = lazy(() => import(`~/pages/Hero`));
 const About = lazy(() => import(`~/pages/About`));
