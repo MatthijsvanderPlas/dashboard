@@ -14,10 +14,11 @@ export default function Chart({
   const keys = Object.keys(data[0]).filter((d) => d !== 'assignment');
   const getAssignment = (d: IScore) => d.assignment;
   const background = '#ffffff';
-  const blue = '#0000FF';
-  const green = '#00FF00';
+  const bar1 = '#8dddd0';
+  const bar2 = '#f6c85f';
+  const black = '#000000';
   const assignmentScale = scaleBand<string>({
-    domain: Object.values(data).map(getAssignment).slice(0, 10),
+    domain: Object.values(data).map(getAssignment),
     padding: 0.01,
   });
 
@@ -32,7 +33,7 @@ export default function Chart({
 
   const colorScale = scaleOrdinal<string, string>({
     domain: keys,
-    range: [blue, green],
+    range: [bar1, bar2],
   });
 
   //bounds
@@ -84,11 +85,11 @@ export default function Chart({
       <AxisBottom
         top={yMax + margin.top}
         scale={assignmentScale}
-        stroke={green}
-        tickStroke={green}
+        stroke={black}
+        tickStroke={black}
         hideAxisLine
         tickLabelProps={() => ({
-          fill: green,
+          fill: black,
           fontSize: 11,
           textAnchor: 'middle',
         })}

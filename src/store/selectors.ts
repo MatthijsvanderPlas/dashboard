@@ -56,7 +56,7 @@ export const filteredStudents = createSelector(
 
 export const selectStudentData = (id: number) => {
   return createSelector(selectStudentById(id), getEntities, (student, entities) => {
-    const scoresArray: [StudentData] = Object.values(entities).filter((entity) => {
+    const scoresArray: StudentData[] = Object.values(entities).filter((entity) => {
       if (entity.student === student.student) {
         return entity.score;
       }

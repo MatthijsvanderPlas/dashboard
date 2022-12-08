@@ -10,7 +10,7 @@ export default function Student() {
 
   return (
     <>
-      <div className='flex p-4 flex-col mx-auto max-w-4xl max-h-[500px] overflow-scroll'>
+      <div className='flex p-4 flex-col mx-auto w-[500px] h-[300px] max-w-4xl max-h-[500px] overflow-scroll'>
         <h2>{currentStudentData && currentStudentData[0].student}</h2>
         {currentStudentData && (
           <ParentSize>
