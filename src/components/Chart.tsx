@@ -140,7 +140,6 @@ export default function Chart({
         hideAxisBottom
         hideAxisLeft
         hideGridRows
-        tooltipForBrush
       >
         <PatternLines
           id={PATTERN_ID}

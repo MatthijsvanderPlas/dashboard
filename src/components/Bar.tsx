@@ -43,7 +43,6 @@ export default function Bar({
   hideAxisLeft = false,
   hideAxisBottom = false,
   hideGridRows = false,
-  tooltipForBrush = false,
   children,
 }: IBarProps) {
   const getAssignment = (d: IScore) => d.assignment;

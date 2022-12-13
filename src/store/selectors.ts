@@ -1,6 +1,6 @@
 import { RootState } from './store';
 import { createSelector } from '@reduxjs/toolkit';
-import { Student, StudentById, StudentData } from '~/utils/types';
+import { StudentById, StudentData } from '~/utils/types';
 export const selectStatus = (state: RootState) => state.data.status;
 
 export const selectStudentsObject = (state: RootState) => state?.data?.students?.ById;
