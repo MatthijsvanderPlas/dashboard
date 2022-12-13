@@ -13,7 +13,6 @@ export default function Student() {
   const [data, setData] = useState<StudentData[] | null>(null);
 
   useEffect(() => {
-    console.log(currentStudentData);
     if (currentStudentData) {
       setData(currentStudentData);
     }

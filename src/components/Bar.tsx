@@ -3,6 +3,7 @@ import { BarGroup } from '@visx/shape';
 import { AxisBottom, AxisLeft, AxisScale } from '@visx/axis';
 import { IScore } from '~/utils/types';
 import { AnyScaleBand } from '@visx/shape/lib/types';
+import { GridRows } from '@visx/grid';
 
 export interface IBarProps {
   xMax: number;
@@ -21,6 +22,8 @@ export interface IBarProps {
   left?: number;
   top?: number;
   children?: React.ReactNode;
+  hideGridRows?: boolean;
+  tooltipForBrush?: boolean;
 }
 
 export default function Bar({
@@ -39,6 +42,8 @@ export default function Bar({
   events = false,
   hideAxisLeft = false,
   hideAxisBottom = false,
+  hideGridRows = false,
+  tooltipForBrush = false,
   children,
 }: IBarProps) {
   const getAssignment = (d: IScore) => d.assignment;
@@ -48,6 +53,15 @@ export default function Bar({
   return xMax < 10 ? null : (
     <>
       <Group top={top || margin.top} left={left || margin.left}>
+        {!hideGridRows && (
+          <GridRows
+            scale={yScale}
+            width={xMax}
+            height={height}
+            stroke='#e0e0e0'
+            tickValues={[1, 2, 3, 4, 5]}
+          />
+        )}
         <BarGroup
           data={data}
           keys={keys}
@@ -88,11 +102,19 @@ export default function Bar({
             scale={xScale}
             stroke={black}
             tickStroke={black}
+            tickFormat={(tick) => {
+              if (tick.length > 10) {
+                return tick.replaceAll(' - ', '\n');
+              }
+              return tick;
+            }}
             tickLabelProps={() => ({
               fill: black,
               fontSize: 11,
               width: 20,
+              y: 15,
               textAnchor: 'middle',
+              verticalAnchor: 'start',
             })}
           />
         )}

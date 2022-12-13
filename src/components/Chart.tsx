@@ -139,6 +139,8 @@ export default function Chart({
         colorScale={colorScale}
         hideAxisBottom
         hideAxisLeft
+        hideGridRows
+        tooltipForBrush
       >
         <PatternLines
           id={PATTERN_ID}
