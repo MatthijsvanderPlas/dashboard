@@ -176,7 +176,6 @@ export default function Bar({
           <AxisLeft
             scale={yScale}
             stroke={black}
-            strokeWidth={1.6}
             tickStroke={black}
             tickLabelProps={() => ({
               fill: black,
