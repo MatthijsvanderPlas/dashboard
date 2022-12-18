@@ -2,8 +2,9 @@ import { Group } from '@visx/group';
 import { BarGroup } from '@visx/shape';
 import { AxisBottom, AxisLeft, AxisScale } from '@visx/axis';
 import { IScore } from '~/utils/types';
-import { AnyScaleBand } from '@visx/shape/lib/types';
+import { AnyScaleBand, BarGroupBar } from '@visx/shape/lib/types';
 import { GridRows } from '@visx/grid';
+import { useTooltip, defaultStyles, useTooltipInPortal } from '@visx/tooltip';
 
 export interface IBarProps {
   xMax: number;
@@ -26,6 +27,12 @@ export interface IBarProps {
   tooltipForBrush?: boolean;
 }
 
+type TooltipData = {
+  ass: string;
+  key: string;
+  value: number;
+};
+
 export default function Bar({
   xMax,
   height,
@@ -45,13 +52,43 @@ export default function Bar({
   hideGridRows = false,
   children,
 }: IBarProps) {
+  const { tooltipData, tooltipLeft, tooltipTop, tooltipOpen, showTooltip, hideTooltip } =
+    useTooltip<TooltipData>();
+
+  const { containerRef, TooltipInPortal } = useTooltipInPortal({
+    scroll: true,
+    detectBounds: true,
+  });
+
+  const tooltipStyles = {
+    ...defaultStyles,
+    minWidth: 60,
+    backgroundColor: 'rgba(0,0,0,0.9)',
+    color: 'white',
+    zIndex: 100,
+  };
+
   const getAssignment = (d: IScore) => d.assignment;
+
+  const handleMouseOverBar = (
+    e: React.MouseEvent<SVGRectElement, MouseEvent>,
+    idx: number,
+    bar: BarGroupBar<string>,
+  ) => {
+    const x = e.clientX;
+    const y = e.clientY;
+    showTooltip({
+      tooltipLeft: x,
+      tooltipTop: y,
+      tooltipData: { ass: data[idx].assignment, key: bar.key, value: bar.value },
+    });
+  };
 
   const black = '#4e8ac8';
 
   return xMax < 10 ? null : (
     <>
-      <Group top={top || margin.top} left={left || margin.left}>
+      <Group ref={containerRef} top={top || margin.top} left={left || margin.left}>
         {!hideGridRows && (
           <GridRows
             scale={yScale}
@@ -84,6 +121,8 @@ export default function Bar({
                     height={bar.height}
                     fill={bar.color}
                     rx={4}
+                    onMouseMove={(e) => handleMouseOverBar(e, barGroup.index, bar)}
+                    onMouseOut={hideTooltip}
                     onClick={() => {
                       if (!events) return;
                       const { key, value } = bar;
@@ -95,6 +134,22 @@ export default function Bar({
             ))
           }
         </BarGroup>
+        {tooltipOpen && tooltipData && (
+          <TooltipInPortal
+            key={Math.random()}
+            top={tooltipTop}
+            left={tooltipLeft}
+            style={tooltipStyles}
+          >
+            <div>
+              <strong>{tooltipData.ass}</strong>
+            </div>
+            <div>{tooltipData.key}</div>
+            <div>
+              <small>{tooltipData.value}</small>
+            </div>
+          </TooltipInPortal>
+        )}
         {!hideAxisBottom && (
           <AxisBottom
             top={yMax}
