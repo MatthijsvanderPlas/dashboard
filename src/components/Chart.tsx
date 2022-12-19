@@ -70,7 +70,7 @@ export default function Chart({
   const yBrushMax = Math.max(bottomChartHeight);
 
   const ordinalScale = scaleOrdinal({
-    domain: ['difficulty', 'fun'],
+    domain: Object.keys(data[0]).filter((d) => d !== 'assignment'),
     range: [bar1, bar2],
   });
 
