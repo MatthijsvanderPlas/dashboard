@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 type filterSlice = {
   studentFilter: string[];
+  assignmentFilter: string[];
 };
 
 const initialState: filterSlice = {
   studentFilter: [],
+  assignmentFilter: [],
 };
 
 const filterSlice = createSlice({
@@ -19,9 +21,17 @@ const filterSlice = createSlice({
         state.studentFilter.push(action.payload);
       }
     },
+    toggleAssignment(state, action) {
+      const indexOfPayload = state.assignmentFilter.indexOf(action.payload);
+      if (indexOfPayload > -1) {
+        state.assignmentFilter.splice(indexOfPayload, 1);
+      } else {
+        state.assignmentFilter.push(action.payload);
+      }
+    },
   },
 });
 
-export const { toggleStudent } = filterSlice.actions;
+export const { toggleStudent, toggleAssignment } = filterSlice.actions;
 
 export default filterSlice.reducer;

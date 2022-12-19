@@ -39,8 +39,8 @@ export interface StudentData {
 
 export interface IScore {
   assignment: string;
-  difficulty: number;
-  fun: number;
+  difficulty?: number;
+  fun?: number;
 }
 
 export interface dataSliceProps {

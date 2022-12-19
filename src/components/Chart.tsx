@@ -6,6 +6,15 @@ import { Brush } from '@visx/brush';
 import { Bounds } from '@visx/brush/lib/types';
 import BaseBrush from '@visx/brush/lib/BaseBrush';
 import { PatternLines } from '@visx/pattern';
+import { LegendItem, LegendLabel, LegendOrdinal } from '@visx/legend';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { toggleAssignment } from '~/store/filterSlice';
+import { selectAssignmentFilter } from '~/store/selectors';
+import _ from 'underscore';
+
+const background = '#ffffff';
+const bar1 = '#8dddd0';
+const bar2 = '#f6c85f';
 
 export default function Chart({
   width,
@@ -15,10 +24,29 @@ export default function Chart({
 }: BarGroupProps) {
   const brushRef = useRef<BaseBrush | null>(null);
   const [filterData, setFilterData] = useState<IScore[]>([]);
+  const [dataSlice, setDataSlice] = useState<number[]>([0, 10]);
+  const [colors, setColors] = useState<string[]>([bar1, bar2]);
+  const [keys, setKeys] = useState<string[]>(
+    Object.keys(data[0]).filter((d) => d !== 'assignment'),
+  );
+  const filterKeys = useAppSelector(selectAssignmentFilter, _.isEqual);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setFilterData(data.slice(0, 10));
-  }, [data]);
+    setKeys(filterKeys);
+  }, [filterKeys]);
+
+  useEffect(() => {
+    if (keys.includes('difficulty')) {
+      setColors([bar1, bar2]);
+    } else {
+      setColors([bar2]);
+    }
+  }, [keys]);
+
+  useEffect(() => {
+    setFilterData(data.slice(dataSlice[0], dataSlice[1]));
+  }, [data, dataSlice]);
 
   const PATTERN_ID = 'brush_pattern';
   const selectedBrushStyle = {
@@ -26,11 +54,7 @@ export default function Chart({
     stroke: '#4e8ac8',
   };
 
-  const keys = Object.keys(data[0]).filter((d) => d !== 'assignment');
   const getAssignment = (d: IScore) => d.assignment;
-  const background = '#ffffff';
-  const bar1 = '#8dddd0';
-  const bar2 = '#f6c85f';
 
   const brushMargin = { top: 10, bottom: 15, left: 30, right: 20 };
 
@@ -44,6 +68,11 @@ export default function Chart({
   const yMax = Math.max(topChartHeight, 0);
   const xBrushMax = Math.max(width - margin.left - margin.right, 0);
   const yBrushMax = Math.max(bottomChartHeight);
+
+  const ordinalScale = scaleOrdinal({
+    domain: ['difficulty', 'fun'],
+    range: [bar1, bar2],
+  });
 
   const assignmentScale = scaleBand<string>({
     domain: Object.values(filterData).map(getAssignment),
@@ -81,7 +110,7 @@ export default function Chart({
 
   const colorScale = scaleOrdinal<string, string>({
     domain: keys,
-    range: [bar1, bar2],
+    range: colors,
   });
 
   const initialPosition = useMemo(
@@ -98,9 +127,12 @@ export default function Chart({
     if (xValues) {
       const first = data.findIndex((obj) => obj.assignment === xValues[0]);
       const last = data.findIndex((obj) => obj.assignment === xValues[xValues.length - 1]);
-      const dataCopy = data.slice(first, last);
-      setFilterData(dataCopy);
+      setDataSlice([first, last]);
     }
+  };
+
+  const handleClick = (key: string) => {
+    dispatch(toggleAssignment(key));
   };
 
   assignmentScale.rangeRound([0, xMax]);
@@ -111,59 +143,99 @@ export default function Chart({
   brushAssignmentScale.rangeRound([0, xBrushMax]);
 
   return width < 10 ? null : (
-    <svg width={width} height={height}>
-      <rect x={0} y={0} width={xMax} height={height} fill={background} rx={35} />
-      <Bar
-        xMax={xMax}
-        height={topChartHeight}
-        margin={margin}
-        data={filterData}
-        keys={keys}
-        yMax={yMax}
-        xScale={assignmentScale}
-        xGroupScale={groupScale}
-        yScale={scoreScale}
-        colorScale={colorScale}
-      />
-      <Bar
-        xMax={xBrushMax}
-        height={bottomChartHeight}
-        margin={margin}
-        top={topChartHeight + topChartBottomMargin + margin.bottom}
-        data={data}
-        keys={keys}
-        yMax={yBrushMax}
-        xScale={brushAssignmentScale}
-        xGroupScale={brushGroupScale}
-        yScale={brushScoreScale}
-        colorScale={colorScale}
-        hideAxisBottom
-        hideAxisLeft
-        hideGridRows
-      >
-        <PatternLines
-          id={PATTERN_ID}
-          height={8}
-          width={8}
-          stroke={'#4e8ac8'}
-          strokeWidth={0.2}
-          orientation={['diagonal']}
+    <>
+      <div className='relative flex top-0 justify-center'>
+        <LegendOrdinal
+          scale={ordinalScale}
+          direction='row'
+          labelMargin='0 20px 0 5px'
+          shape={'circle'}
+          shapeMargin='1px 0 0'
+        >
+          {(labels: any[]) => (
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              {labels.map((label, i) => (
+                <LegendItem
+                  className={`cursor-pointer ${
+                    !keys.includes(label.text) ? 'opacity-30 line-through' : null
+                  }`}
+                  key={`legend-quantile-${i}`}
+                  margin='0 5px'
+                  onClick={() => handleClick(label.text)}
+                >
+                  <svg width={15} height={15}>
+                    <circle
+                      viewBox='0 0 30 30'
+                      fill={label.value}
+                      r={15 / 2}
+                      cx={15 / 2}
+                      cy={15 / 2}
+                    />
+                  </svg>
+                  <LegendLabel align='left' margin='0 0 0 4px'>
+                    {label.text}
+                  </LegendLabel>
+                </LegendItem>
+              ))}
+            </div>
+          )}
+        </LegendOrdinal>
+      </div>
+      <svg width={width} height={height}>
+        <rect x={0} y={0} width={xMax} height={height} fill={background} rx={35} />
+        <Bar
+          xMax={xMax}
+          height={topChartHeight}
+          margin={margin}
+          data={filterData}
+          keys={keys}
+          yMax={yMax}
+          xScale={assignmentScale}
+          xGroupScale={groupScale}
+          yScale={scoreScale}
+          colorScale={colorScale}
         />
-        <Brush
+        <Bar
+          xMax={xBrushMax}
+          height={bottomChartHeight}
+          margin={margin}
+          top={topChartHeight + topChartBottomMargin + margin.bottom}
+          data={data}
+          keys={keys}
+          yMax={yBrushMax}
           xScale={brushAssignmentScale}
+          xGroupScale={brushGroupScale}
           yScale={brushScoreScale}
-          width={xBrushMax}
-          height={yBrushMax}
-          innerRef={brushRef}
-          margin={brushMargin}
-          resizeTriggerAreas={[]}
-          brushDirection='horizontal'
-          initialBrushPosition={initialPosition}
-          onChange={onBrushChange}
-          selectedBoxStyle={selectedBrushStyle}
-          useWindowMoveEvents
-        />
-      </Bar>
-    </svg>
+          colorScale={colorScale}
+          hideAxisBottom
+          hideAxisLeft
+          hideGridRows
+          showBox
+        >
+          <PatternLines
+            id={PATTERN_ID}
+            height={8}
+            width={8}
+            stroke={'#4e8ac8'}
+            strokeWidth={0.2}
+            orientation={['diagonal']}
+          />
+          <Brush
+            xScale={brushAssignmentScale}
+            yScale={brushScoreScale}
+            width={xBrushMax}
+            height={yBrushMax}
+            innerRef={brushRef}
+            margin={brushMargin}
+            resizeTriggerAreas={[]}
+            brushDirection='horizontal'
+            initialBrushPosition={initialPosition}
+            onChange={onBrushChange}
+            selectedBoxStyle={selectedBrushStyle}
+            useWindowMoveEvents
+          />
+        </Bar>
+      </svg>
+    </>
   );
 }

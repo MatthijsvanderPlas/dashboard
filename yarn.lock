@@ -673,6 +673,17 @@
     classnames "^2.3.1"
     prop-types "^15.6.2"
 
+"@visx/legend@^2.10.0":
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/@visx/legend/-/legend-2.10.0.tgz#d561f86e4bc536f9d50e21d607e65f05640f73d5"
+  integrity sha512-OI8BYE6QQI9eXAng/C7UzuVw7d0fwlzrth6RmrdhlyT1K+BA3WpExapV+pDfwxu/tkEik8Ps5cZRV6HjX1/Mww==
+  dependencies:
+    "@types/react" "*"
+    "@visx/group" "2.10.0"
+    "@visx/scale" "2.2.2"
+    classnames "^2.3.1"
+    prop-types "^15.5.10"
+
 "@visx/pattern@^2.10.0":
   version "2.10.0"
   resolved "https://registry.npmjs.org/@visx/pattern/-/pattern-2.10.0.tgz"

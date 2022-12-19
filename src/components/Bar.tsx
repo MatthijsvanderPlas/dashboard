@@ -1,6 +1,6 @@
 import { Group } from '@visx/group';
 import { BarGroup } from '@visx/shape';
-import { AxisBottom, AxisLeft, AxisScale } from '@visx/axis';
+import { AxisBottom, AxisLeft, AxisRight, AxisScale, AxisTop } from '@visx/axis';
 import { IScore } from '~/utils/types';
 import { AnyScaleBand, BarGroupBar } from '@visx/shape/lib/types';
 import { GridRows } from '@visx/grid';
@@ -24,13 +24,14 @@ export interface IBarProps {
   top?: number;
   children?: React.ReactNode;
   hideGridRows?: boolean;
-  tooltipForBrush?: boolean;
+  showBox?: boolean;
 }
 
 type TooltipData = {
   ass: string;
   key: string;
   value: number;
+  color: string;
 };
 
 export default function Bar({
@@ -50,21 +51,25 @@ export default function Bar({
   hideAxisLeft = false,
   hideAxisBottom = false,
   hideGridRows = false,
+  showBox = false,
   children,
 }: IBarProps) {
   const { tooltipData, tooltipLeft, tooltipTop, tooltipOpen, showTooltip, hideTooltip } =
     useTooltip<TooltipData>();
 
-  const { containerRef, TooltipInPortal } = useTooltipInPortal({
+  const { containerRef, containerBounds, TooltipInPortal } = useTooltipInPortal({
     scroll: true,
     detectBounds: true,
   });
 
   const tooltipStyles = {
     ...defaultStyles,
-    minWidth: 60,
-    backgroundColor: 'rgba(0,0,0,0.9)',
-    color: 'white',
+    margin: 0,
+    padding: 0,
+    border: 10,
+    borderColor: 'black',
+    borderRadius: 10,
+    minWidth: 100,
     zIndex: 100,
   };
 
@@ -78,17 +83,17 @@ export default function Bar({
     const x = e.clientX;
     const y = e.clientY;
     showTooltip({
-      tooltipLeft: x,
-      tooltipTop: y,
-      tooltipData: { ass: data[idx].assignment, key: bar.key, value: bar.value },
+      tooltipLeft: x - containerBounds.left,
+      tooltipTop: y - containerBounds.top,
+      tooltipData: { ass: data[idx].assignment, key: bar.key, value: bar.value, color: bar.color },
     });
   };
 
-  const black = '#4e8ac8';
+  const blue = '#4e8ac8';
 
   return xMax < 10 ? null : (
     <>
-      <Group ref={containerRef} top={top || margin.top} left={left || margin.left}>
+      <Group innerRef={containerRef} top={top || margin.top} left={left || margin.left}>
         {!hideGridRows && (
           <GridRows
             scale={yScale}
@@ -98,6 +103,7 @@ export default function Bar({
             tickValues={[1, 2, 3, 4, 5]}
           />
         )}
+
         <BarGroup
           data={data}
           keys={keys}
@@ -141,12 +147,15 @@ export default function Bar({
             left={tooltipLeft}
             style={tooltipStyles}
           >
-            <div>
+            <div className='bg-neutral-300 text-[#4e8ac8] w-ful p-2 overflow-hidden rounded-tl rounded-tr'>
               <strong>{tooltipData.ass}</strong>
             </div>
-            <div>{tooltipData.key}</div>
-            <div>
-              <small>{tooltipData.value}</small>
+            <div className={`w-full p-2`}>
+              <span
+                className='w-3 h-3 inline-block mr-2 rounded-full'
+                style={{ backgroundColor: tooltipData.color }}
+              ></span>
+              {tooltipData.key[0].toUpperCase() + tooltipData.key.substring(1)}: {tooltipData.value}
             </div>
           </TooltipInPortal>
         )}
@@ -154,8 +163,8 @@ export default function Bar({
           <AxisBottom
             top={yMax}
             scale={xScale}
-            stroke={black}
-            tickStroke={black}
+            stroke={blue}
+            tickStroke={blue}
             tickFormat={(tick) => {
               if (tick.length > 10) {
                 return tick.replaceAll(' - ', '\n');
@@ -163,7 +172,7 @@ export default function Bar({
               return tick;
             }}
             tickLabelProps={() => ({
-              fill: black,
+              fill: blue,
               fontSize: 11,
               width: 20,
               y: 15,
@@ -175,15 +184,41 @@ export default function Bar({
         {!hideAxisLeft && (
           <AxisLeft
             scale={yScale}
-            stroke={black}
-            tickStroke={black}
+            stroke={blue}
+            tickStroke={blue}
             tickLabelProps={() => ({
-              fill: black,
+              fill: blue,
               fontSize: 15,
+              x: -10,
               textAnchor: 'end',
+              verticalAnchor: 'middle',
             })}
             tickValues={[1, 2, 3, 4, 5]}
           />
+        )}
+        {showBox && (
+          <>
+            <AxisLeft scale={yScale} stroke={blue} tickStroke={'0'} numTicks={0} />
+            <AxisRight scale={yScale} left={xMax} stroke={blue} tickStroke={'0'} numTicks={0} />
+            <AxisBottom
+              scale={xScale}
+              top={yMax}
+              stroke={blue}
+              tickStroke={'0'}
+              tickLabelProps={() => ({
+                fontSize: 0,
+              })}
+            />
+            <AxisTop
+              scale={xScale}
+              stroke={blue}
+              tickStroke={'0'}
+              numTicks={0}
+              tickLabelProps={() => ({
+                fontSize: 0,
+              })}
+            />
+          </>
         )}
         {children}
       </Group>
