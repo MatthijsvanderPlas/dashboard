@@ -27,6 +27,7 @@ const filterSlice = createSlice({
         state.assignmentFilter.splice(indexOfPayload, 1);
       } else {
         state.assignmentFilter.push(action.payload);
+        state.assignmentFilter.sort()
       }
     },
   },
