@@ -6,7 +6,7 @@ type filterSlice = {
 
 const initialState: filterSlice = {
   studentFilter: [],
-  assignmentFilter: ['difficult','fun'],
+  assignmentFilter: ['difficulty','fun'],
 };
 
 const filterSlice = createSlice({
