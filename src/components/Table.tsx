@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 import { useMemo } from 'react';
-import { useTable } from 'react-table';
+import { usePagination, useSortBy, useTable } from 'react-table';
 import { StudentData } from '~/utils/types';
 
 function Table({ data }: { data: StudentData[] }) {
@@ -25,64 +25,126 @@ function Table({ data }: { data: StudentData[] }) {
     ],
     [],
   );
-  const tableInstance = useTable({ columns, data });
-
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
-
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    prepareRow,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    state: { pageIndex, pageSize },
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState: { pageIndex: 0, pageSize: 20 },
+    },
+    useSortBy,
+    usePagination,
+  );
   return (
-    <table {...getTableProps()}>
-      <thead>
-        {
-          // Loop over the header rows
-          headerGroups.map((headerGroup) => (
-            // Apply the header row props
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {
-                // Loop over the headers in each row
-                headerGroup.headers.map((column) => (
-                  // Apply the header cell props
-                  <th {...column.getHeaderProps()}>
-                    {
-                      // Render the header
-                      column.render('Header')
-                    }
-                  </th>
-                ))
-              }
+    <>
+      <table {...getTableProps()} className='border-l-[1px] mx-auto '>
+        <thead className='border-[1px]'>
+          {headerGroups.map((headerGroup) => (
+            <tr className='border-[1px]' {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th
+                  className='border-[1px] text-left min-w-[100px]'
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                >
+                  {column.render('Header')}
+                </th>
+              ))}
             </tr>
-          ))
-        }
-      </thead>
-      {/* Apply the table body props */}
-      <tbody {...getTableBodyProps()}>
-        {
-          // Loop over the table rows
-          rows.map((row) => {
-            // Prepare the row for display
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {page.map((row, i) => {
             prepareRow(row);
             return (
-              // Apply the row props
               <tr {...row.getRowProps()}>
-                {
-                  // Loop over the rows cells
-                  row.cells.map((cell) => {
-                    // Apply the cell props
-                    return (
-                      <td {...cell.getCellProps()}>
-                        {
-                          // Render the cell contents
-                          cell.render('Cell')
-                        }
-                      </td>
-                    );
-                  })
-                }
+                {row.cells.map((cell) => {
+                  return (
+                    <td className='border-r-[1px] border-b-[1px]' {...cell.getCellProps()}>
+                      {cell.render('Cell')}
+                    </td>
+                  );
+                })}
               </tr>
             );
-          })
-        }
-      </tbody>
-    </table>
+          })}
+        </tbody>
+      </table>
+      <div className='flex justify-center p-1'>
+        <button
+          className='bg-slate-100 px-2 m-1 rounded-sm shadow-md border-[1px] border-slate-400'
+          onClick={() => gotoPage(0)}
+          disabled={!canPreviousPage}
+        >
+          {'<<'}
+        </button>{' '}
+        <button
+          className='bg-slate-100 m-1 px-2 rounded-sm shadow-md border-[1px] border-slate-400'
+          onClick={() => previousPage()}
+          disabled={!canPreviousPage}
+        >
+          {'<'}
+        </button>{' '}
+        <button
+          className='bg-slate-100 m-1 px-2 rounded-sm shadow-md border-[1px] border-slate-400'
+          onClick={() => nextPage()}
+          disabled={!canNextPage}
+        >
+          {'>'}
+        </button>{' '}
+        <button
+          className='bg-slate-100 m-1 px-2 rounded-sm shadow-md border-[1px] border-slate-400'
+          onClick={() => gotoPage(pageCount - 1)}
+          disabled={!canNextPage}
+        >
+          {'>>'}
+        </button>{' '}
+        <span className='m-1 px-2'>
+          Page{' '}
+          <strong>
+            {pageIndex + 1} of {pageOptions.length}
+          </strong>{' '}
+        </span>
+        <span className='m-1 px-2'>
+          | Go to page:{' '}
+          <input
+            className='  border-[1px]'
+            type='number'
+            defaultValue={pageIndex + 1}
+            onChange={(e) => {
+              const page = e.target.value ? Number(e.target.value) - 1 : 0;
+              gotoPage(page);
+            }}
+            style={{ width: '100px' }}
+          />
+        </span>{' '}
+        <select
+          value={pageSize}
+          onChange={(e) => {
+            setPageSize(Number(e.target.value));
+          }}
+        >
+          {[10, 20, 30, 40, 50].map((pageSize) => (
+            <option key={pageSize} value={pageSize}>
+              Show {pageSize}
+            </option>
+          ))}
+        </select>
+      </div>
+    </>
   );
 }
 export default Table;
