@@ -12,7 +12,7 @@ export default function Student() {
 
   return (
     <>
-      <div className='flex relative p-4 flex-col mx-auto lg:w-4/5 h-[600px] max-w-4xl max-h-[500px] '>
+      <div className='flex relative p-4 flex-col mx-auto m-14 lg:w-4/5 h-[600px] max-w-4xl max-h-[500px] '>
         {currentStudentData ? <h2>{currentStudent.student}</h2> : null}
         {currentStudentData && (
           <ParentSize>

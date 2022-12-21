@@ -24,7 +24,7 @@ function Layout() {
         <Breadcrumbs />
         <Outlet />
       </div>
-      <div className='fixed z-40 bottom-0 left-0 w-full'>
+      <div className='absolute z-40 bottom-0 left-0 w-full'>
         <Footer />
       </div>
     </div>
