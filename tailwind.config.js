@@ -15,8 +15,8 @@ module.exports = {
         },
       },
       animation: {
-        slide: 'slide 200ms ease-in-out forwards',
-        out: 'out 200ms ease-in-out forwards',
+        slide: 'slide 300ms ease-in-out forwards',
+        out: 'out 300ms ease-in-out forwards',
       },
     },
   },

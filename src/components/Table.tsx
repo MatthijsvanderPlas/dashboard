@@ -1,12 +1,16 @@
 /* eslint-disable react/jsx-key */
 import {
+  SortingState,
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { useState } from 'react';
 import { StudentData } from '~/utils/types';
+import { MdOutlineArrowDropUp, MdOutlineArrowDropDown } from 'react-icons/md';
 
 const columnHelper = createColumnHelper<StudentData>();
 
@@ -38,9 +42,15 @@ const columns = [
 ];
 
 function Table({ data }: { data: StudentData[] }) {
+  const [sorting, setSorting] = useState<SortingState>([]);
   const table = useReactTable({
     data,
     columns,
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
@@ -49,12 +59,33 @@ function Table({ data }: { data: StudentData[] }) {
       <table className='border-2'>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr className='text-left' key={headerGroup.id}>
+            <tr className='text-left  bg-[#4e8ac8] text-white' key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th className='border-2 p-2 min-w-[75px]' key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(header.column.columnDef.header, header.getContext())}
+                <th
+                  className={` p-2 min-w-[75px] ${
+                    header.id !== 'Assignment' ? 'max-w-[100px] w-[100px]' : ''
+                  } ${['Difficulty', 'Fun'].includes(header.id) ? 'text-center' : ''}`}
+                  key={header.id}
+                >
+                  {header.isPlaceholder ? null : (
+                    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+                    <div
+                      key={header.id}
+                      {...{
+                        className:
+                          'flex justify-between' + header.column.getCanSort()
+                            ? 'cursor-pointer select-none'
+                            : '',
+                        onClick: header.column.getToggleSortingHandler(),
+                      }}
+                    >
+                      {flexRender(header.column.columnDef.header, header.getContext())}
+                      {{
+                        asc: <MdOutlineArrowDropUp size={20} style={{ display: 'inline' }} />,
+                        desc: <MdOutlineArrowDropDown size={20} style={{ display: 'inline' }} />,
+                      }[header.column.getIsSorted() as string] ?? null}
+                    </div>
+                  )}
                 </th>
               ))}
             </tr>
@@ -62,9 +93,14 @@ function Table({ data }: { data: StudentData[] }) {
         </thead>
         <tbody>
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
+            <tr className='border-b-[1px]' key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <td className='px-2' key={cell.id}>
+                <td
+                  className={`px-2 ${
+                    ['Difficulty', 'Fun'].includes(cell.column.id) ? 'text-center' : ''
+                  }`}
+                  key={cell.id}
+                >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
