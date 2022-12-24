@@ -1,150 +1,140 @@
 /* eslint-disable react/jsx-key */
-import { useMemo } from 'react';
-import { usePagination, useSortBy, useTable } from 'react-table';
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
 import { StudentData } from '~/utils/types';
 
+const columnHelper = createColumnHelper<StudentData>();
+
+const columns = [
+  columnHelper.accessor((row) => row.student, {
+    id: 'Name',
+    header: () => <span>Name</span>,
+    cell: (info) => info.getValue(),
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor((row) => row.score.assignment, {
+    id: 'Assignment',
+    header: () => <span>Assignment</span>,
+    cell: (info) => info.getValue(),
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor((row) => row.score.difficulty, {
+    id: 'Difficulty',
+    header: () => <span>Difficulty</span>,
+    cell: (info) => info.getValue(),
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor((row) => row.score.fun, {
+    id: 'Fun',
+    header: () => <span>Fun</span>,
+    cell: (info) => info.getValue(),
+    footer: (info) => info.column.id,
+  }),
+];
+
 function Table({ data }: { data: StudentData[] }) {
-  const columns = useMemo(
-    () => [
-      {
-        Header: 'Student',
-        accessor: (row: StudentData) => row.student,
-      },
-      {
-        Header: 'Assignment',
-        accessor: (row: StudentData) => row.score.assignment,
-      },
-      {
-        Header: 'Difficulty',
-        accessor: (row: StudentData) => row.score.difficulty,
-      },
-      {
-        Header: 'Fun',
-        accessor: (row: StudentData) => row.score.fun,
-      },
-    ],
-    [],
-  );
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    page,
-    prepareRow,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize },
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState: { pageIndex: 0, pageSize: 20 },
-    },
-    useSortBy,
-    usePagination,
-  );
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+  });
   return (
-    <>
-      <table {...getTableProps()} className='border-l-[1px] mx-auto '>
-        <thead className='border-[1px]'>
-          {headerGroups.map((headerGroup) => (
-            <tr className='border-[1px]' {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  className='border-[1px] text-left min-w-[100px]'
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                >
-                  {column.render('Header')}
+    <div className='p-2 mb-20 max-w-4xl mx-auto flex justify-center flex-col'>
+      <table className='border-2'>
+        <thead>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr className='text-left' key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th className='border-2 p-2 min-w-[75px]' key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(header.column.columnDef.header, header.getContext())}
                 </th>
               ))}
             </tr>
           ))}
         </thead>
-        <tbody {...getTableBodyProps()}>
-          {page.map((row, i) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <td className='border-r-[1px] border-b-[1px]' {...cell.getCellProps()}>
-                      {cell.render('Cell')}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td className='px-2' key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
         </tbody>
       </table>
-      <div className='flex justify-center p-1'>
+      <div className='h-2' />
+      <div className='flex items-center justify-center  gap-3'>
         <button
-          className='bg-slate-100 px-2 m-1 rounded-sm shadow-md border-[1px] border-slate-400'
-          onClick={() => gotoPage(0)}
-          disabled={!canPreviousPage}
+          className='border cursor-pointer rounded p-1 shadow active:shadow-inner'
+          onClick={() => table.setPageIndex(0)}
+          disabled={!table.getCanPreviousPage()}
         >
           {'<<'}
-        </button>{' '}
+        </button>
         <button
-          className='bg-slate-100 m-1 px-2 rounded-sm shadow-md border-[1px] border-slate-400'
-          onClick={() => previousPage()}
-          disabled={!canPreviousPage}
+          className='border cursor-pointer rounded p-1 shadow active:shadow-inner'
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
         >
           {'<'}
-        </button>{' '}
+        </button>
         <button
-          className='bg-slate-100 m-1 px-2 rounded-sm shadow-md border-[1px] border-slate-400'
-          onClick={() => nextPage()}
-          disabled={!canNextPage}
+          className='border cursor-pointer rounded p-1 shadow active:shadow-inner'
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
         >
           {'>'}
-        </button>{' '}
+        </button>
         <button
-          className='bg-slate-100 m-1 px-2 rounded-sm shadow-md border-[1px] border-slate-400'
-          onClick={() => gotoPage(pageCount - 1)}
-          disabled={!canNextPage}
+          className='border cursor-pointer rounded p-1 shadow active:shadow-inner'
+          onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+          disabled={!table.getCanNextPage()}
         >
           {'>>'}
-        </button>{' '}
-        <span className='m-1 px-2'>
-          Page{' '}
+        </button>
+        <span className='flex items-center gap-1'>
+          <div>Page</div>
           <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>{' '}
+            {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+          </strong>
         </span>
-        <span className='m-1 px-2'>
-          | Go to page:{' '}
+        <span className='flex items-center gap-1'>
+          | Go to page:
           <input
-            className='  border-[1px]'
             type='number'
-            defaultValue={pageIndex + 1}
+            defaultValue={table.getState().pagination.pageIndex + 1}
             onChange={(e) => {
               const page = e.target.value ? Number(e.target.value) - 1 : 0;
-              gotoPage(page);
+              table.setPageIndex(page);
             }}
-            style={{ width: '100px' }}
+            className='border p-1 rounded w-16'
           />
-        </span>{' '}
+        </span>
         <select
-          value={pageSize}
+          value={table.getState().pagination.pageSize}
           onChange={(e) => {
-            setPageSize(Number(e.target.value));
+            table.setPageSize(Number(e.target.value));
           }}
         >
-          {[10, 20, 30, 40, 50].map((pageSize) => (
+          {[10, 20, 30].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
               Show {pageSize}
             </option>
           ))}
         </select>
       </div>
-    </>
+    </div>
   );
 }
+
 export default Table;
