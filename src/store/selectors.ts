@@ -1,6 +1,6 @@
 import { RootState } from './store';
 import { createSelector } from '@reduxjs/toolkit';
-import { StudentById, IScore } from '~/utils/types';
+import { StudentById, IScore, StudentData } from '~/utils/types';
 export const selectStatus = (state: RootState) => state.data.status;
 
 export const selectStudentsObject = (state: RootState) => state?.data?.students?.ById;
@@ -29,7 +29,7 @@ export const selectStudentByName = (name: string) => {
   return createSelector(selectStudentsObject, (students) => {
     if (students) {
       const student: StudentById = Object.values(students).find((item) => item.student === name);
-      return student as StudentById;
+      return student.id || 0;
     }
   });
 };
@@ -41,7 +41,7 @@ export const selectStudentById = (id: number) => {
 };
 
 export const selectAllStudents = createSelector(selectStudentsObject, (students) => {
-  const studentsArray: number[] = Object.values(students).map((item) => item.id);
+  const studentsArray = Object.values(students).map((item) => item.student);
   return studentsArray;
 });
 
@@ -71,10 +71,13 @@ export const selectStudentData = (id: number) => {
   });
 };
 
-// export const filteredStudentsData = createSelector(
-//   filteredStudents,
-//   getEntities,
-//   (students, entities) => {
-//     const scoresAvgArray: IScore[] = Object.values(entities).map();
-//   },
-// );
+export const filteredStudentsData = createSelector(
+  getEntities,
+  filteredStudents,
+  (entities, students) => {
+    const scoresArray: StudentData[] = Object.values(entities).filter((obj) =>
+      students.includes(obj.student),
+    );
+    return scoresArray;
+  },
+);

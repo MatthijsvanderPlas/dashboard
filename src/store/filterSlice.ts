@@ -6,7 +6,7 @@ type filterSlice = {
 
 const initialState: filterSlice = {
   studentFilter: [],
-  assignmentFilter: ['difficulty','fun'],
+  assignmentFilter: ['difficulty', 'fun'],
 };
 
 const filterSlice = createSlice({
@@ -27,7 +27,7 @@ const filterSlice = createSlice({
         state.assignmentFilter.splice(indexOfPayload, 1);
       } else {
         state.assignmentFilter.push(action.payload);
-        state.assignmentFilter.sort()
+        state.assignmentFilter.sort();
       }
     },
   },
