@@ -29,7 +29,7 @@ export const selectStudentByName = (name: string) => {
   return createSelector(selectStudentsObject, (students) => {
     if (students) {
       const student: StudentById = Object.values(students).find((item) => item.student === name);
-      return student.id || 0;
+      return student?.id;
     }
   });
 };

@@ -4,12 +4,18 @@ import { useAppSelector } from '~/store/hooks';
 import { selectStudentById, selectStudentByName, selectStudentData } from '~/store/selectors';
 import { ParentSize } from '@visx/responsive';
 import _ from 'underscore';
+import LoadingSpinner from '~/components/LoadingSpinner';
 
 export default function Student() {
   const student = useParams();
   const id = useAppSelector(selectStudentByName(student.id as string));
   const currentStudent = useAppSelector(selectStudentById(id as number));
   const currentStudentData = useAppSelector(selectStudentData(id as number), _.isEqual);
+  const loading = useAppSelector((state) => state.data.status);
+
+  if (loading === 'loading') {
+    return <LoadingSpinner />;
+  }
 
   return (
     <>
