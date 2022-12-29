@@ -7,7 +7,7 @@ function Spreadsheet() {
 
   return (
     <>
-      <div className='flex flex-col mx-auto  max-w-4xl'>
+      <div className='flex flex-col mx-auto  max-w-[75ch]'>
         <h1 className='w-full text-2xl break-all p-4'>Spreadsheet Data</h1>
         <p className='leading-relaxed py-2'>
           This is a spreadsheet of the complete data using{' '}
