@@ -5,6 +5,7 @@ import { selectStudentById, selectStudentByName, selectStudentData } from '~/sto
 import { ParentSize } from '@visx/responsive';
 import _ from 'underscore';
 import LoadingSpinner from '~/components/LoadingSpinner';
+import StudentInfo from '~/components/StudentInfo';
 
 export default function Student() {
   const student = useParams();
@@ -19,8 +20,8 @@ export default function Student() {
 
   return (
     <>
-      <div className='flex relative p-4 flex-col mx-auto m-14 lg:w-4/5 h-[600px] max-w-4xl max-h-[500px] '>
-        {currentStudentData.length > 0 ? <h2>{currentStudent.student}</h2> : null}
+      <StudentInfo student={currentStudent.student} full='true' />
+      <div className='flex relative p-4 flex-col mx-auto mt-4 mb-10  lg:w-4/5 h-[600px] max-w-7xl max-h-[500px] '>
         {currentStudentData.length > 0 && (
           <ParentSize>
             {(parent) => (

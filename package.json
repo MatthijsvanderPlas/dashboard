@@ -13,6 +13,7 @@
     "format": "npm run prettier:fix && npm run lint:fix"
   },
   "dependencies": {
+    "@bigheads/core": "^0.3.3",
     "@reduxjs/toolkit": "^1.9.0",
     "@tanstack/react-table": "^8.7.4",
     "@types/axios": "^0.14.0",

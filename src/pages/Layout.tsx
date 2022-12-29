@@ -9,7 +9,7 @@ function Layout() {
       <div className='fixed border-r-10 z-30 max-w-[230px] bg-white'>
         <NavBar />
       </div>
-      <div className='relative z-10  w-screen'>
+      <div className='relative z-10 lg:ml-[230px] w-screen'>
         <Breadcrumbs />
         <Outlet />
       </div>
