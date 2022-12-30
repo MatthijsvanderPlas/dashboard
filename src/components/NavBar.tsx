@@ -16,14 +16,14 @@ const NavBar = () => {
   };
 
   return (
-    <div className='flex z-30 h-[50px] min-w-full top-0 left-0 lg:flex-col border-b-[1px] border-slate-300 lg:h-screen lg:max-w-[230px] bg-white  lg:items-center lg:border-r-[1.5px] lg:border-r-slate-300'>
+    <div className='flex z-30 h-[50px] w-screen top-0 left-0 items-center  lg:flex-col border-b-[1px] border-slate-300 lg:h-screen lg:max-w-[230px] bg-white  lg:items-center lg:border-r-[1.5px] lg:border-r-slate-300'>
       <Link to='' className='flex px-2  items-center'>
         <img src={winc} alt='winc logo' className='max-h-[35px] my-4 ml-2 '></img>
         <p className='pl-2 w-[210px] text-lg font-bold text-[#4e8ac8] overflow-hidden'>
           Student Dashboard
         </p>
       </Link>
-      <div className='w-full h-full lg:hidden'>
+      <div className='p-2 absolute right-2 lg:hidden'>
         <Hamburger />
       </div>
       <div className='flex invisible  lg:visible py-8 lg:flex-col w-full justify-center'>
