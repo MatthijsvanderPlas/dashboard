@@ -12,7 +12,7 @@ const StudentModal = ({ close, open }: Props) => {
 
   return (
     <div
-      className={`flex absolute -z-10  ${
+      className={`flex invisible lg:visible absolute -z-10  ${
         open ? 'visible animate-slide ' : 'animate-out'
       } left-[0px] top-[0px] h-screen w-[230px]  flex-col bg-white pt-16 border-[1px] border-r-slate-100`}
     >

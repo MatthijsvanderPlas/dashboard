@@ -16,6 +16,8 @@ const background = '#ffffff';
 const bar1 = '#8dddd0';
 const bar2 = '#f6c85f';
 
+const x = window.innerWidth > 1000 ? 10 : 5;
+
 export default function Chart({
   width,
   height,
@@ -24,7 +26,7 @@ export default function Chart({
 }: BarGroupProps) {
   const brushRef = useRef<BaseBrush | null>(null);
   const [filterData, setFilterData] = useState<IScore[]>([]);
-  const [dataSlice, setDataSlice] = useState<number[]>([0, 10]);
+  const [dataSlice, setDataSlice] = useState<number[]>([0, x]);
   const [colors, setColors] = useState<string[]>([bar1, bar2]);
   const [keys, setKeys] = useState<string[]>(
     Object.keys(data[0]).filter((d) => d !== 'assignment'),
@@ -116,7 +118,7 @@ export default function Chart({
   const initialPosition = useMemo(
     () => ({
       start: { x: brushAssignmentScale(getAssignment(data[0])) },
-      end: { x: brushAssignmentScale(getAssignment(data[9])) },
+      end: { x: brushAssignmentScale(getAssignment(data[x])) },
     }),
     [brushAssignmentScale, data],
   );
