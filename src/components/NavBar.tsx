@@ -19,7 +19,7 @@ const NavBar = () => {
     <div className='flex z-30 h-[50px] w-screen top-0 left-0 items-center  lg:flex-col border-b-[1px] border-slate-300 lg:h-screen lg:max-w-[230px] bg-white  lg:items-center lg:border-r-[1.5px] lg:border-r-slate-300'>
       <Link to='' className='flex px-2  items-center'>
         <img src={winc} alt='winc logo' className='max-h-[35px] my-4 ml-2 '></img>
-        <p className='pl-2 w-[210px] text-lg font-bold text-[#4e8ac8] overflow-hidden'>
+        <p className='pl-2 w-[230px] text-lg font-bold text-[#4e8ac8] overflow-hidden'>
           Student Dashboard
         </p>
       </Link>
