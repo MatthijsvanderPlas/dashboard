@@ -6,76 +6,86 @@ Create a new project with Vite, React JS, TypeScript, Eslint, Prettier in just 1
 
 ![image](https://user-images.githubusercontent.com/70432453/170648662-2ff424b9-74e9-4754-a04d-512fe1496a3b.png)
 
-## **Some Features 📋**
+Final assignment: React Student Dashboard
+For this final assignment, you will make a "real-life" project. This will be a project of which the end result will actually be used by Winc Academy: a Student Dashboard!
+Goal: to make it easy for Winc teachers to see how the students evaluate the assignments
 
-Alias Import
+What is the current situation: Excel, Excel, Excel.....
 
-![image](https://user-images.githubusercontent.com/70432453/170644457-ede03cca-44e9-4543-94d3-412c9d317063.png)
+Design: We would like to see, per assignment, the evaluation of each student in a "Bar Chart".
 
-Hook Warning
+Tools: Use a JavaScript framework such as React.
 
-![image](https://user-images.githubusercontent.com/70432453/170638708-23a20ffd-156e-494a-84be-b1e1cfdb5c93.png)
+The data
+The link below is to a spreadsheet file (in Google Docs) with a mountain of fake data (also called mock data), with fake students. These are the results of students once they have completed all assignment evaluations.
+Winc Final Assignment – ​​Student Mock data
+As you can see, this data has the following structure:
 
-Prettier Warning
+Name of student
+Name of the assignment / project (including the project code)
+Rate how much fun the assignment was
+Rate how difficult the assignment was
+It is up to you to model and structure the data correctly. Don't go over typing the data, it's way too much data for that.
 
-![image](https://user-images.githubusercontent.com/70432453/170639043-24423ed1-73cc-4730-b270-2acea1ae0c74.png)
+A good way to work with data is a CSV file. You can download the data from Google Sheets as CSV. You can also work directly with the data from Google Sheets.
 
-Etc...
+Use a search engine to find a smart way to work with the data. It can also be done in several ways. As an example, Node has a list of packages to process CSV.
+Requirements
+Your WebApplication must display the following
 
-## **Using 📦**
+Dashboard Overview User-story: As a user, when I open the homepage of the application I want to see an overview in the form of a bar chart of the evaluations (fun & difficult) of all students.
+As a user, I must be able to distinguish at a glance between the assignments and the fun/difficult evaluation. Make sure that a clear distinction is made visually, for example by working with clear colours. See the example with red and yellow below.
 
-1. Clone Template
+image
 
-```
-git clone https://github.com/igdev116/vite-react-ts-eslint-prettier.git
-```
+Separate routing per student As a user I want to see a list of the names of all students and be able to click on one of these students. When I click on a student name I am taken to the route /{name-of-student}. The bar chart adjusts with the data of only this student.
+Tip: the chart remains the same on the X and Y axes, only gets "less" data, namely the data of 1 student.
 
-2. Install Packages
+Design: Create a tool that you are proud of and that you would like to show to a future employer. We pay particular attention to: legibility of the graphs.
+Slicing and dicing. - Choose one of the methods below: As a user of the tool you can "slice and dice" the data in a number of ways".
+Option 1: As a user, I want to be able to indicate by means of a checkbox whether I only want to show in the bar chart how nice the assignment was, only want to see how difficult the assignment was, or both.
+Option 2: As a user, in addition to filtering on 1 person, I also want to be able to filter on multiple people. I, therefore, want to see a checkbox in the overview of my students that I can do
+check if I want to include the data of this specific student in my chart
+uncheck if I want to exclude the data of this specific student from my chart.
+Option 3: As a user, I want to see a line-chart representation of my data showing the average grade for "fun" and the average grade for "difficult".
+image
 
-```
-yarn install
-```
+Create Graphs with a Library!
+You are free to choose and use your own chart library, a relatively simple library is:
 
-3. Start Project
+Victory. Here's an example of using the Victory graph library:
 
-```
-yarn dev
-```
+WincAcademy/StudentDashboardExample
 
-4. If you using git, delete the existing folder .git after cloning (open `git bash` or other terminal)
+Bonus features
+Make sure that the data can be "sliced and diced" in more than 1 way (see requirement 4).
 
-```
-rm -rf .git
-```
+Table overview of all data ⇒ so as an Excel spreadsheet. You can decide for yourself how you want to structure the columns / rows:
 
-## **Options ✍️**
+You can still filter in all the above ways
+Add sort by data column
+- User Profiles. By using Mockaroo you can retrieve objects with fake data in them. You can then add a profile for each student page and further enrich the fictitious students with:
 
-1. Check lint
+Last name
+Age
+Phone number
+E-mail address
+Photo (URL)
+Note the rate limiting of this API - if you call too often and too much, you will be (temporarily) blocked: fetch the data once and then save it locally in a JSON file
+Store and manage everything in Redux.
+Sort the bar charts of assignments by average grade (high to low or low to high).
+Sort the students by average grades (high to low or low to high).
+Tips & Tricks
+Make a plan: don't dive right into the code. First, carefully consider what is being asked of you:
 
-```
-yarn lint
-```
+What data do I have available?
+What should I eventually do with this data?
+Keeping that in mind: in what form do I have to "cast" the data to enable the features?*
+Draw out which components you need (think) – try to make a subdivision right away between (smart) container components and visual (dumb) components
+Also think about the structure and files of the different parts (don't forget that an appropriate and good name is worth gold!)
+"Copying" is allowed - help each other(!) and use every source you can find (online). But, of course, do not copy code (= plagiarism).
 
-2. Fix lint
+You may use a CSS Framework (such as Bootstrap).
 
-```
-yarn lint:fix
-```
+If you need a reminder on how to start a React project: look at the lesson you've had about this.
 
-3. Check prettier
-
-```
-yarn prettier
-```
-
-4. Fix prettier
-
-```
-yarn prettier:fix
-```
-
-5. Fix lint and prettier
-
-```
-yarn format
-```
