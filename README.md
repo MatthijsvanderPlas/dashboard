@@ -75,8 +75,9 @@ Victory. Here's an example of using the Victory graph library:
 
 - **Table overview** of all data ⇒ so as an Excel spreadsheet. You can decide for yourself how you want to structure the columns / rows:
 
->You can still filter in all the above ways
->Add sort by data column
+> - You can still filter in all the above ways
+> - Add sort by data column
+
 - **User Profiles.** By using Mockaroo you can retrieve objects with fake data in them. You can then add a profile for each student page and further enrich the fictitious students with:
 
 > - Last name
