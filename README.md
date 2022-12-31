@@ -23,25 +23,29 @@ For this final assignment, you will make a "real-life" project. This will be a p
 
 <h3>The data</h3>
 The link below is to a spreadsheet file (in Google Docs) with a mountain of fake data (also called mock data), with fake students. These are the results of students once they have completed all assignment evaluations.
-[Winc Final Assignment – ​​Student Mock data](https://docs.google.com/spreadsheets/d/1BHjq5MjpuSItvVbnQcEdQt_v956-Ks1lr3f_nEFkTks/edit?usp=sharing)
+<a href='https://docs.google.com/spreadsheets/d/1BHjq5MjpuSItvVbnQcEdQt_v956-Ks1lr3f_nEFkTks/edit?usp=sharing'>Winc Final Assignment – ​​Student Mock data</a><br>
 As you can see, this data has the following structure:
 
-Name of student
-Name of the assignment / project (including the project code)
-Rate how much fun the assignment was
-Rate how difficult the assignment was
+- Name of student
+- Name of the assignment / project (including the project code)
+- Rate how much fun the assignment was
+- Rate how difficult the assignment was
+
 It is up to you to model and structure the data correctly. Don't go over typing the data, it's way too much data for that.
 
 A good way to work with data is a CSV file. You can download the data from Google Sheets as CSV. You can also work directly with the data from Google Sheets.
 
 Use a search engine to find a smart way to work with the data. It can also be done in several ways. As an example, Node has a list of packages to process CSV.
-Requirements
-Your WebApplication must display the following
 
-Dashboard Overview User-story: As a user, when I open the homepage of the application I want to see an overview in the form of a bar chart of the evaluations (fun & difficult) of all students.
+<h3>Requirements</h3>
+
+Your WebApplication **must display the following**
+
+1. **Dashboard Overview User-story:** As a user, when I open the homepage of the application I want to see an overview in the form of a **bar chart** of the evaluations (fun & difficult) of **all students**.
+   
 As a user, I must be able to distinguish at a glance between the assignments and the fun/difficult evaluation. Make sure that a clear distinction is made visually, for example by working with clear colours. See the example with red and yellow below.
 
-image
+[!image](https://media.wincacademy.nl/student_dashboard1.png)
 
 Separate routing per student As a user I want to see a list of the names of all students and be able to click on one of these students. When I click on a student name I am taken to the route /{name-of-student}. The bar chart adjusts with the data of only this student.
 Tip: the chart remains the same on the X and Y axes, only gets "less" data, namely the data of 1 student.
