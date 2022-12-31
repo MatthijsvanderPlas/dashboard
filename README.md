@@ -3,23 +3,27 @@
 <h2>Template used:</h2>
 
 Vite + React + TypeScript + Eslint + Prettier Template
+
 Create a new project with Vite, React JS, TypeScript, Eslint, Prettier in just 1 second and you don't need to setup anything.
 
 #### **Vercel Deploy: https://vite-react-ts-eslint-prettier.vercel.app**
 
-Final assignment: React Student Dashboard
-For this final assignment, you will make a "real-life" project. This will be a project of which the end result will actually be used by Winc Academy: a Student Dashboard!
-Goal: to make it easy for Winc teachers to see how the students evaluate the assignments
+<h2>Final assignment: React Student Dashboard</h2>
 
-What is the current situation: Excel, Excel, Excel.....
+<h3>The following is the assignment given to me by WINC Academy.</h3>
 
-Design: We would like to see, per assignment, the evaluation of each student in a "Bar Chart".
+For this final assignment, you will make a "real-life" project. This will be a project of which the end result will actually be used by Winc Academy: a Student Dashboard!<br>
+**Goal:** to make it easy for Winc teachers to see how the students evaluate the assignments
 
-Tools: Use a JavaScript framework such as React.
+**What is the current situation:** Excel, Excel, Excel.....
 
-The data
+**Design:** We would like to see, per assignment, the evaluation of each student in a "Bar Chart".
+
+**Tools:** Use a JavaScript framework such as React.
+
+<h3>The data</h3>
 The link below is to a spreadsheet file (in Google Docs) with a mountain of fake data (also called mock data), with fake students. These are the results of students once they have completed all assignment evaluations.
-Winc Final Assignment – ​​Student Mock data
+[Winc Final Assignment – ​​Student Mock data](https://docs.google.com/spreadsheets/d/1BHjq5MjpuSItvVbnQcEdQt_v956-Ks1lr3f_nEFkTks/edit?usp=sharing)
 As you can see, this data has the following structure:
 
 Name of student
