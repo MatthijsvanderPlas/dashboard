@@ -94,11 +94,11 @@ Victory. Here's an example of using the Victory graph library:
 
 - Make a plan: don't dive right into the code. First, carefully consider what is being asked of you:
 
->What data do I have available?
->What should I eventually do with this data?
->Keeping that in mind: in what form do I have to "cast" the data to enable the features?*
->Draw out which components you need (think) – try to make a subdivision right away between (smart) container components and visual (dumb) components
->Also think about the structure and files of the different parts (don't forget that an appropriate and good name is worth gold!)
+> - What data do I have available?
+> - What should I eventually do with this data?
+> - Keeping that in mind: in what form do I have to "cast" the data to enable the features?*
+> - Draw out which components you need (think) – try to make a subdivision right away between (smart) container components and visual (dumb) components
+> - Also think about the structure and files of the different parts (don't forget that an appropriate and good name is worth gold!)
 
 - "Copying" is allowed - help each other(!) and use every source you can find (online). But, of course, do not copy code (= plagiarism).
 
