@@ -55,7 +55,7 @@ function Table({ data }: { data: StudentData[] }) {
     getPaginationRowModel: getPaginationRowModel(),
   });
   return (
-    <div className='p-2 mb-20 max-w-4xl mx-auto flex justify-center flex-col'>
+    <div className='p-1 pr-3 mb-20 max-w-4xl mx-auto flex justify-center flex-col'>
       <table className='border-2'>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -108,8 +108,8 @@ function Table({ data }: { data: StudentData[] }) {
           ))}
         </tbody>
       </table>
-      <div className='h-2' />
-      <div className='flex items-center justify-center  gap-3'>
+      <div className='h-2 p-1' />
+      <div className='flex items-center justify-center gap-1 lg:gap-3'>
         <button
           className='border cursor-pointer rounded p-1 shadow active:shadow-inner'
           onClick={() => table.setPageIndex(0)}

@@ -13,7 +13,7 @@ import Section from '~/components/Section';
 function About() {
   return (
     <>
-      <div className='flex relative p-4 flex-col mx-auto mt-4 mb-14  lg:w-4/5  max-w-[75ch]  leading-relaxed'>
+      <div className='flex relative p-4 pt-0 flex-col mx-auto  mb-14  lg:w-4/5  max-w-[75ch]  leading-relaxed'>
         <h1 className='text-2xl p-4 my-4 tracking-tighter'>About</h1>
         <p className='text-base tracking-wide'>
           Short description about the App/Site I have created as my final assignment for my WINC

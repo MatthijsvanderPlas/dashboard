@@ -12,7 +12,13 @@ function Avatar({ student }: { student: string }) {
       Math.floor(Math.random() * Object.keys(facialHairMap).length)
     ] as IFacialHair;
   }
-  return <BigHead body={FEMALE.includes(student) ? 'breasts' : 'chest'} facialHair={facialHair} />;
+  return (
+    <BigHead
+      graphic='react'
+      body={FEMALE.includes(student) ? 'breasts' : 'chest'}
+      facialHair={facialHair}
+    />
+  );
 }
 
 export default Avatar;

@@ -4,7 +4,7 @@ function Footer() {
   return (
     <div className='relative p-2 bg-neutral-300 flex items-center'>
       <p className='absolute text-xs'>
-        Copyright &copy; {new Date().getFullYear()}{' '}
+        <span className='hidden lg:inline'>Copyright</span> &copy; {new Date().getFullYear()}{' '}
         <a
           href='https://www.stardash.nl'
           target='_blank'
@@ -12,8 +12,8 @@ function Footer() {
           className='underline hover:text-slate-400'
         >
           StarDASH.nl
-        </a>{' '}
-        All Rights Reserved
+        </a>
+        <span className='hidden lg:inline'> All Rights Reserved</span>
       </p>
       <div className='flex mx-auto text-3xl'>
         <div className='px-1 text-white  hover:text-black'>

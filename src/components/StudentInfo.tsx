@@ -1,3 +1,4 @@
+import { MdOutlineMail, MdOutlineTextsms, MdOutlineWorkOutline } from 'react-icons/md';
 import PersonalInfo from '../../public/info.json';
 import Avatar from './Avatar';
 
@@ -6,7 +7,7 @@ function StudentInfo({ student, full }: { student: string; full: string | null }
     <div className='flex relative p-4 flex-col mx-auto lg:w-4/5 max-w-7xl'>
       {PersonalInfo.filter((info) => info.first_name === student).map((info) => (
         <div key={student} className='flex flex-row max-w-4xl  justify-start'>
-          <div className='w-[150px] mr-5'>
+          <div className='min-w-[100px] my-auto  mr-1'>
             <Avatar student={student} />
           </div>
           <div className='flex flex-col leading-loose pt-5'>
@@ -15,17 +16,23 @@ function StudentInfo({ student, full }: { student: string; full: string | null }
             </span>
             {full && (
               <>
-                <div className='flex'>
-                  <span className='w-[150px]'>Job: </span>
-                  <span>{info.job_title}</span>
+                <div className='flex items-center'>
+                  <span className='pr-1'>
+                    <MdOutlineWorkOutline />
+                  </span>
+                  <span> : {info.job_title}</span>
                 </div>
-                <div className='flex'>
-                  <span className='w-[150px]'>Email:</span>
-                  <span>{info.email}</span>
+                <div className='flex items-center '>
+                  <span className='pr-1'>
+                    <MdOutlineMail />
+                  </span>
+                  <span className='break-all'> : {info.email}</span>
                 </div>
-                <div className='flex'>
-                  <span className='w-[150px]'>Catch Phrase:</span>
-                  <span>{info.phrase}</span>
+                <div className='flex items-center'>
+                  <span className='pr-1 pt-2  self-start'>
+                    <MdOutlineTextsms />
+                  </span>
+                  <span>: {info.phrase}</span>
                 </div>
               </>
             )}
