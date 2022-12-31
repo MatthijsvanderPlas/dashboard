@@ -1,8 +1,8 @@
 <h1 align='center'>Student Dashboard Assignment</h1>
 
+<h2>Template used:</h2>
 
-<h2>Vite + React + TypeScript + Eslint + Prettier Template ⚡</h1>
-
+Vite + React + TypeScript + Eslint + Prettier Template
 Create a new project with Vite, React JS, TypeScript, Eslint, Prettier in just 1 second and you don't need to setup anything.
 
 #### **Vercel Deploy: https://vite-react-ts-eslint-prettier.vercel.app**
