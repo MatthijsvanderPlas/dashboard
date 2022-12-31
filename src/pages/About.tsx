@@ -30,11 +30,12 @@ function About() {
           <FaChartBar className='text-6xl text-[#f7575c]' />
         </div>
         <Section title='Redux'>
-          Not the first time working with Redux, but this time I explored and learned about Thunk
-          and Middleware. What I struggled with for a while was the idea that the original data is
-          not being edited or changed. All data on the site is derived by selectors as is
-          recommended practice, only the student filter is actually state that is manipulated
-          through actions. In the end I decided to try and work with a normalized data approach.
+          Not the first time working with Redux, but this time I explored and learned about
+          AsyncThunk and Middleware functionality. What I struggled with for a while was the idea
+          that the original data is not being edited or changed. All data on the site is derived by
+          selectors as is recommended practice, only the student filter is actually state that is
+          manipulated through actions. In the end I decided to try and work with a normalized data
+          approach.
         </Section>
         <Section title='Tailwind Css'>
           First time working with Tailwind css, but definitely a keeper. I will likely evolve in the
