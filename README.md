@@ -1,4 +1,4 @@
-<h3>Live code: <a href='https://studentdashboard-matt.netlify.app/'>StarDASH</a></h1>
+<h3>Live code: <a href='https://studentdashboard-matt.netlify.app/'>Dashboard</a></h1>
 
 <h1 align='center'>Student Dashboard Assignment</h1>
 
